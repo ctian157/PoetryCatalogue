@@ -41,9 +41,8 @@ function FavoritesPage ({ refetchPoems }) {
             //display with translation
             setSelectedPoem(translatedPoem);
 
-            if (refetchPoems){
-                refetchPoems();
-            }
+            //reload Explore page too
+            refetchPoems();
 
 
         } catch (error) {

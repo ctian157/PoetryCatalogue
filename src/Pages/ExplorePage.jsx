@@ -87,7 +87,12 @@ function ExplorePage ({ poems, setPoems }) {
             alert(`Poem deleted`);
 
             //re-render UI upon state change
-            setPoems((prev) => prev.filter((p) => (p.id !== id)));
+            setPoems((prev) => prev.filter((p) => (p.id !== poemID)));
+
+            //remove from Favorites as well if it's in there
+            if (isFavorite(poemID)) {
+                removeFavorite(poemID);
+            }
 
             setSelectedPoem(null);
 
@@ -231,7 +236,8 @@ function ExplorePage ({ poems, setPoems }) {
                                         onToggleFavorite = {() => handleToggleFavorite(p)}/>
                             ))}
                 </div>
-
+                
+                {selectedPoem && (
                 <PoemDisplay    poem = {selectedPoem} 
                                 onClose = {() =>setSelectedPoem(null)}
                                 onUpdate = {handleUpdate}
@@ -239,7 +245,7 @@ function ExplorePage ({ poems, setPoems }) {
                                 onAllowUpdateAndDelete={true}
                                 onTranslate = {handleTranslate}
                                 loading = {loading}/>
-
+                )}
                 
                 <AddPoemCard    isCreating = {isCreating} 
                                 newPoem = {newPoem}
