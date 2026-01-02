@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
+import NavBar from '../Components/NavBar'
 import { useState } from 'react';
-import './FavoritesPage.css'
+import { useParams } from 'react-router-dom'
+import './ChineseFavoritesPage.css'
 import useFavorites from '../Hooks/useFavorites'
-import PoemCard from '../Components/PoemCard'
-import PoemDisplay from '../Components/PoemDisplay'
+import LanguagePoemCard from '../Components/LanguagePoemCard'
+import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
 
 
+//I DELETED REFETCH BECAUSE SAME POEM OBJECT FROM POEMSBYLANGUAGE SHOULD BE UPDATED, WHICH REFLECTS IN CENTRALIZED STATE
+function ChineseFavoritesPage () {
 
-function FavoritesPage ({ refetchPoems }) {
+    const {lang} = useParams();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedPoem, setSelectedPoem] = useState(null);
@@ -41,10 +44,6 @@ function FavoritesPage ({ refetchPoems }) {
             //display with translation
             setSelectedPoem(translatedPoem);
 
-            //reload Explore page too
-            refetchPoems();
-
-
         } catch (error) {
             showError("Non-server error occurred.");
         } finally {
@@ -58,13 +57,7 @@ function FavoritesPage ({ refetchPoems }) {
             <div className = "favorites-content">
                 <div className = 'favorites-title-bar'>
                     <h1 className = 'favorites-text'>Favorites</h1> 
-                    <div className = 'favorites-button-bar'> 
-                        <Link to= "/">Home</Link>
-                        <div className = "vertical-line">|</div>
-                        <Link to= "/favorites">Favorites</Link>
-                        <div className = "vertical-line">|</div>
-                        <Link to= "/explore">Explore</Link>
-                    </div>
+                    <NavBar/>
                 </div>
 
                 <p>Poems may be edited or deleted only on the Explore page ~</p>
@@ -81,15 +74,15 @@ function FavoritesPage ({ refetchPoems }) {
                             ) : (
                                 //get the array of favorited poems and render them
                                 favorites.map((p) => 
-                                    <PoemCard poem = {p} onClick = {() => setSelectedPoem(p)}/>)
+                                    <LanguagePoemCard key={p.id} lang={lang} poem = {p} onClick = {() => setSelectedPoem(p)}/>)
                                 )
                     }        
                 </div>
 
-                <PoemDisplay poem = {selectedPoem} onClose = {() =>setSelectedPoem(null)} onTranslate = {handleTranslate} loading = {loading}/>
+                <LanguagePoemDisplay poem = {selectedPoem} lang = {lang} onClose = {() =>setSelectedPoem(null)} onTranslate = {handleTranslate} loading = {loading}/>
             </div>
         </div>
     )
 }
 
-export default FavoritesPage
+export default ChineseFavoritesPage
