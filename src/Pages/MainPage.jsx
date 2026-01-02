@@ -1,10 +1,16 @@
 import {Link} from 'react-router-dom'
+import "./MainPage.css"
 
-function MainPage({poems}) {
+function MainPage() {
     return (
         <div>
-            <h1>Main Page</h1>
+            <div className="title"></div>
+                <h1>Main Page</h1>
+
+            <div className = "language-links">
             <Link to='/zh'>Chinese</Link>
+            <Link to='/en'>English</Link>
+            </div>
         </div>
     )
 }

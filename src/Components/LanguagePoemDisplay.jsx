@@ -59,7 +59,7 @@ function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onAllow
     }
 
 
-    return <PoemDisplay poem={poem} 
+    return <PoemDisplay poem={poem}
                         onClose={onClose}
                         onDelete={onDelete}
                         editedPoem={editedPoem}

@@ -1,15 +1,12 @@
-import "./ExplorePage.css"
-import LanguagePoemCard from "../Components/LanguagePoemCard"
-import LanguagePoemDisplay from "../Components/LanguagePoemDisplay";
-import AddPoemCard from "../Components/AddPoemCard";
 import { useParams} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import useFavorites from "../Hooks/useFavorites"
 import pinyin from 'pinyin';
-import NavBar from "../Components/NavBar";
+import ChineseExplorePage from "./ChineseExplorePage";
+import EnglishExplorePage from "./EnglishExplorePage";
 
 //receives the poems list from App as a prop
-function ExplorePage ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguage }) {
+function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguage }) {
 
     const { lang } = useParams(); 
 
@@ -67,7 +64,6 @@ function ExplorePage ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguag
         poem.content.toLowerCase().includes(userInput)
     );
     
-
     //maintains favorites
     const handleToggleFavorite = (poem) => {
         if (isFavorite(poem.id)) {
@@ -170,7 +166,7 @@ function ExplorePage ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguag
                 poet: '',
                 poet_en: '',
                 dynasty: '',
-                content: ''
+                content: '',
             });
 
             //re-render UI (savedPoem has id whereas newPoem doesn't!)
@@ -218,73 +214,33 @@ function ExplorePage ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguag
 
     }
 
+    const explorePages = {
+        zh: ChineseExplorePage,
+        en: EnglishExplorePage
+    };
+    
+    const ExplorePage=explorePages[lang];
 
     return (
-    
-        <div className = "explore-page">
-            <div className = "explore-content">
-                <div className = 'explore-title-bar'>
-                    <h1 className = 'explore-text'>Explore</h1>
-                    <NavBar/>
-                </div>
-
-                <button className = "create-button" onClick = {() => setIsCreating(true)}>Create </button>
-
-                <input  className = "search-bar" 
-                        placeholder = "Search poem..."
-                        value = {searchTerm}
-                        onChange = {(e) => setSearchTerm(e.target.value)}/>
-
-                <div className = 'poem-library'>
-                        {filteredPoems.map((p) => (
-                            <LanguagePoemCard   key={p.id} 
-                                        lang={lang}
-                                        poem={p} 
-                                        onClick = {() => setSelectedPoem(p)}
-                                        onToggleFavorite = {() => handleToggleFavorite(p)}/>
-                            ))}
-                </div>
-                
-                {selectedPoem && (
-                <LanguagePoemDisplay   
-                                poem = {selectedPoem} 
-                                lang={lang}
-                                onClose = {() =>setSelectedPoem(null)}
-                                onUpdate = {handleUpdate}
-                                onDelete = {handleDelete}
-                                onAllowUpdateAndDelete={true}
-                                onTranslate = {handleTranslate}
-                                loading = {loading}/>
-                )}
-                
-                <AddPoemCard    isCreating = {isCreating} 
-                                newPoem = {newPoem}
-                                setNewPoem = {setNewPoem}
-                                onClose = {() => setIsCreating(false)}
-                                onSubmit = {handlePost}/>
-
-
-                {errorMessage && (
-                    <div style={{
-                        position: 'fixed',
-                        top: '20px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        backgroundColor: '#e74c3c',
-                        color: 'white',
-                        padding: '10px 20px',
-                        borderRadius: '8px',
-                        zIndex: 1000,
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-                      }}>
-                        {errorMessage}
-                    </div>
-                )}
-            
-
-            </div>
-        </div>
+        <ExplorePage 
+        lang={lang}
+        filteredPoems={filteredPoems}
+        selectedPoem={selectedPoem}
+        setSelectedPoem={setSelectedPoem}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        isCreating={isCreating}
+        setIsCreating={setIsCreating}
+        newPoem={newPoem}
+        setNewPoem={setNewPoem}
+        onDelete={handleDelete}
+        onUpdate={handleUpdate}
+        onPost={handlePost}
+        onTranslate={handleTranslate}
+        loading={loading}
+        errorMessage={errorMessage}
+        onToggleFavorite={handleToggleFavorite}/>
     )
 }
 
-export default ExplorePage;
+export default LanguageExplore;

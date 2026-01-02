@@ -1,25 +1,40 @@
+import './FavoritesPage.css'
 import NavBar from '../Components/NavBar'
 import { useState } from 'react';
-import { useParams } from 'react-router-dom'
-import './ChineseFavoritesPage.css'
 import useFavorites from '../Hooks/useFavorites'
 import LanguagePoemCard from '../Components/LanguagePoemCard'
 import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
+import pinyin from 'pinyin';
 
-
-//I DELETED REFETCH BECAUSE SAME POEM OBJECT FROM POEMSBYLANGUAGE SHOULD BE UPDATED, WHICH REFLECTS IN CENTRALIZED STATE
-function ChineseFavoritesPage () {
-
-    const {lang} = useParams();
+function FavoritesPage () {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedPoem, setSelectedPoem] = useState(null);
 
     const { favorites, addFavorite, removeFavorite } = useFavorites();
 
-
     //for loading text when calling Gemini
     const [loading, setLoading] = useState(false);
+
+    //for romanized search (定風波 -> "ding feng bo")
+    const favoritesWithPinyinMaybe = favorites.map(poem => ({
+        ...poem,
+        pinyinTitle: 
+            poem.language === "zh" ? pinyin(poem.title, {//new field
+            style: pinyin.STYLE_NORMAL //returns nested array as each character maps to an array of pinyin syllables
+            }).flat().join(" ") //flatten array into single array and join elements into single string
+            : null //not Chinese
+    }));
+
+    const userInput = searchTerm.toLowerCase().trim().replace(/\s+/g, '');
+
+    //filter for both actual Chinese text and English text
+    const filteredPoems = favoritesWithPinyinMaybe.filter(poem => 
+        poem.title.toLowerCase().includes(userInput) ||
+        (poem.language == 'zh' && poem.pinyinTitle.toLowerCase().replace(/\s+/g, '').includes(userInput))||
+        poem.content.toLowerCase().includes(userInput)
+    );
+
 
     const handleTranslate = async(poemID) => {
         try {
@@ -52,6 +67,8 @@ function ChineseFavoritesPage () {
 
     }
 
+    
+
     return (
         <div className = "favorites-page">
             <div className = "favorites-content">
@@ -69,20 +86,22 @@ function ChineseFavoritesPage () {
                 }/>
 
                 <div className = 'favorites-library'>
-                    {favorites.length === 0 ? 
+                    {filteredPoems.length === 0 ? 
                             (<p>No Favorites Yet</p>
                             ) : (
                                 //get the array of favorited poems and render them
-                                favorites.map((p) => 
-                                    <LanguagePoemCard key={p.id} lang={lang} poem = {p} onClick = {() => setSelectedPoem(p)}/>)
+                                filteredPoems.map((p) => (
+                                    <LanguagePoemCard key={p.id} poem = {p} lang={p.language} onClick = {() => setSelectedPoem(p)}/>))
                                 )
                     }        
                 </div>
 
-                <LanguagePoemDisplay poem = {selectedPoem} lang = {lang} onClose = {() =>setSelectedPoem(null)} onTranslate = {handleTranslate} loading = {loading}/>
-            </div>
+                {selectedPoem && 
+                    <LanguagePoemDisplay poem = {selectedPoem} lang = {selectedPoem.language} onClose = {() =>setSelectedPoem(null)} onTranslate = {handleTranslate} loading = {loading}/>
+                }
+                </div>
         </div>
     )
 }
 
-export default ChineseFavoritesPage
+export default FavoritesPage

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css'
 import MainPage from './Pages/MainPage';
 import LanguageHome from './Pages/LanguageHome'
 import { FavoritesProvider } from './Hooks/useFavorites';
-import LanguageFavorites from './Pages/LanguageFavorites';
-import ExplorePage from './Pages/ExplorePage';
+import FavoritesPage from './Pages/FavoritesPage';
+import LanguageExplore from './Pages/LanguageExplore';
 import PoetPage from './Pages/PoetPage'; 
 
 function App() {
@@ -48,6 +47,7 @@ function App() {
             }
 
             const data = await response.json();// turns JSON response body into array of JavaScriptobjects
+
             setPoemsByLanguage(prev => ({...prev, [lang]: data})); 
 
         } catch (error) {
@@ -82,19 +82,20 @@ function App() {
                 
                 < Route 
                     path="explore"
-                    element={ <ExplorePage
+                    element={ <LanguageExplore
                         poemsByLanguage={poemsByLanguage}
                         fetchPoemsByLanguage={fetchPoemsByLanguage}
                         setPoemsByLanguage={setPoemsByLanguage}/>}/>
 
                 <Route
-                    path="favorites"
-                    element={ <LanguageFavorites/>}/>
-
-                <Route
                     path="poet/:poetName"
                     element={<PoetPage poemsByLanguage={poemsByLanguage} />}/>
             </Route>
+
+            {/*favorites page is global*/}
+            <Route
+                    path="favorites"
+                    element={ <FavoritesPage/>}/>
 
         </Routes>
         </BrowserRouter>

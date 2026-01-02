@@ -29,7 +29,7 @@ function LanguageHome({poemsByLanguage, fetchPoemsByLanguage}) {
     //  LanguageHome path
     //<Outlet /> is replaced by whichever nested route matches:
     return (
-        <HomePage poems={poems} lang={lang}/>
+        <HomePage poems={poems}/>
     );
     
 }

@@ -1,0 +1,7 @@
+.language-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* spacing between links */
+  }
+
+  
