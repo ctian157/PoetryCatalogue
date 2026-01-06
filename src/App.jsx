@@ -38,6 +38,7 @@ function App() {
         }
     }
 
+    //Async function, returns a Promise but nothing explicitly, only updates parent state here
     const fetchPoemsByLanguage = async(lang) => {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem?language=${lang}`);
@@ -49,9 +50,11 @@ function App() {
             const data = await response.json();// turns JSON response body into array of JavaScriptobjects
 
             setPoemsByLanguage(prev => ({...prev, [lang]: data})); 
+            return data; //for poetPage and other components that use this async method
 
         } catch (error) {
             console.error("Error fetching poems:", error);
+            return [];
         }
     }
 
@@ -89,7 +92,7 @@ function App() {
 
                 <Route
                     path="poet/:poetName"
-                    element={<PoetPage poemsByLanguage={poemsByLanguage} />}/>
+                    element={<PoetPage fetchPoemsByLanguage={fetchPoemsByLanguage} />}/>
             </Route>
 
             {/*favorites page is global*/}

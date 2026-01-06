@@ -10,6 +10,7 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
 
     const { lang } = useParams(); 
 
+    
     useEffect(() => { 
         if (!poemsByLanguage[lang]|| poemsByLanguage[lang].length === 0) { 
             fetchPoemsByLanguage(lang); 
