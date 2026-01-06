@@ -21,7 +21,10 @@ function ChineseHomePage({ poems }) {
     <div className = "cn-content">
 
         <div className = 'cn-title-bar'>
-            <h1 className = 'cn-welcome-text'>Welcome Back!</h1>
+            <h1 className = 'cn-welcome-text'>
+                    Chinese Poetry </h1>
+            <h2 className = 'cn-quote'>
+                    落霞与孤鹜齐飞，秋水共长天一色～ </h2>
             <NavBar/>
         </div>
 

@@ -19,7 +19,7 @@
     min-height: 200px;
     background: linear-gradient(to bottom, #847661, #DEC6A1);
     padding: 5rem 1rem 2rem; /* Responsive padding */
-    padding-bottom: 3rem; /* Responsive padding */
+    padding-bottom: 3rem;
     display: flex; /*automatic row alignment*/
     flex-direction: column;
     align-items: center; /*vertical*/

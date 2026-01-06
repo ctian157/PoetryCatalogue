@@ -6,6 +6,7 @@ import PoetCard from "../Components/PoetCard";
 import Shakespeare from '../assets/Shakespeare.avif'; //change later from here
 import Byron from '../assets/LordByron.jpg';
 import Poe from '../assets/EdgarAllanPoe.jpeg';
+import Dickinson from '../assets/EmilyDickinson.jpg';
 
 function EnglishHomePage({ poems }){
 
@@ -13,7 +14,8 @@ function EnglishHomePage({ poems }){
     const poetImages = {
         "William Shakespeare": Shakespeare,
         "Lord Byron": Byron,
-        "Edgar Allan Poe": Poe
+        "Edgar Allan Poe": Poe,
+        "Emily Dickinson":Dickinson
     };
 
     //array of distinct poets by spreading Set into array
@@ -27,8 +29,8 @@ function EnglishHomePage({ poems }){
             <div className = 'en-title-bar'>
                 <h1 className = 'en-welcome-text'>
                     English Poetry </h1>
-                <h1 className = 'en-quote'>
-                    Hold infinity in the palm of your hand, and eternity in an hour~ </h1>
+                <h2 className = 'en-quote'>
+                    Hold infinity in the palm of your hand, and eternity in an hour~ </h2>
                 <NavBar/>
             </div>
     

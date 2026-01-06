@@ -19,6 +19,7 @@
     min-height: 200px;
     background: linear-gradient(to bottom, #847661, #DEC6A1);
     padding: 5rem 1rem 2rem; /* Responsive padding */
+    padding-bottom: 3rem;
     display: flex; /*automatic row alignment*/
     flex-direction: column;
     align-items: center; /*vertical*/
@@ -31,6 +32,14 @@
 .cn-welcome-text {
     font-family:'Ma Shan Zheng';
     font-size: clamp(1.6rem, 4vw, 3.8rem); /* responsive font size */
+    font-weight: 100;
+    color: #744343;
+    margin: 0; /*h1 elements come with default margins*/
+}
+
+.cn-quote {
+    font-family:'Inknut Antiqua';
+    font-size: clamp(1.0rem, 4vw, 1.4rem); /* responsive font size */
     font-weight: 100;
     color: #744343;
     margin: 0; /*h1 elements come with default margins*/

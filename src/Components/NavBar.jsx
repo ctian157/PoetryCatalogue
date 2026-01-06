@@ -26,8 +26,11 @@ function NavBar() {
     return (
        <div className = "nav-bar">
             <Link to="/">Main</Link> {/* Language selection / main */}
+            <p>|</p>
             {<Link to={`/${currLang}/`}>Home</Link>}
+            <p>|</p>
             {<Link to={`/${currLang}/explore`}>Explore</Link>}
+            <p>|</p>
             {<Link to={`/favorites`}>Favorites</Link>}
        </div> 
     );
