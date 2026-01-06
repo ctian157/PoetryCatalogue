@@ -5,7 +5,7 @@ function MainPage() {
     return (
         <div>
             <div className="title"></div>
-                <h1>Main Page</h1>
+                <h1>Poems Around the World</h1>
 
             <div className = "language-links">
             <Link to='/zh'>Chinese</Link>

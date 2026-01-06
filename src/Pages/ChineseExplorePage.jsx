@@ -27,10 +27,10 @@ function ChineseExplorePage ({
 
     return (
     
-        <div className = "explore-page">
-            <div className = "explore-content">
-                <div className = 'explore-title-bar'>
-                    <h1 className = 'explore-text'>Explore</h1>
+        <div className = "cn-explore-page">
+            <div className = "cn-explore-content">
+                <div className = 'cn-explore-title-bar'>
+                    <h1 className = 'cn-explore-text'>Explore</h1>
                     <NavBar/>
                 </div>
 
@@ -41,7 +41,7 @@ function ChineseExplorePage ({
                         value = {searchTerm}
                         onChange = {(e) => setSearchTerm(e.target.value)}/>
 
-                <div className = 'poem-library'>
+                <div className = 'cn-poem-library'>
                         {filteredPoems.map((p) => (
                             <LanguagePoemCard   key={p.id} 
                                         lang={lang}

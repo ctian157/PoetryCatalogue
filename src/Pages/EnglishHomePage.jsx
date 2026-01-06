@@ -3,45 +3,52 @@ import { Link } from "react-router-dom";
 import './EnglishHomePage.css';
 import '../Components/PoetCard.css';
 import PoetCard from "../Components/PoetCard";
-import MountainSun from '../assets/MountainSun.jpg'; //change later from here
-import MountainStream from '../assets/MountainStream.jpg';
-import MountainBlossoms from '../assets/MountainBlossoms.jpg';
+import Shakespeare from '../assets/Shakespeare.avif'; //change later from here
+import Byron from '../assets/LordByron.jpg';
+import Poe from '../assets/EdgarAllanPoe.jpeg';
 
 function EnglishHomePage({ poems }){
 
     //poet image rotation array
-    const poetImages = [MountainSun, MountainBlossoms, MountainStream];
+    const poetImages = {
+        "William Shakespeare": Shakespeare,
+        "Lord Byron": Byron,
+        "Edgar Allan Poe": Poe
+    };
 
     //array of distinct poets by spreading Set into array
     const uniquePoets = [...new Set(poems.map(poem => poem.poet))];
 
     return ( 
-        <div className = 'homepage'>
+        <div className = 'en-homepage'>
     
-        <div className = "content">
+        <div className = "en-content">
     
-            <div className = 'title-bar'>
-                <h1 className = 'welcome-text'>Welcome Back!</h1>
+            <div className = 'en-title-bar'>
+                <h1 className = 'en-welcome-text'>
+                    English Poetry </h1>
+                <h1 className = 'en-quote'>
+                    Hold infinity in the palm of your hand, and eternity in an hour~ </h1>
                 <NavBar/>
             </div>
     
-            <div className = 'imgBackground'></div>
+            <div className = 'en-imgBackground'></div>
     
             <div className = "collection">
     
-                <h1> The Collection:</h1>
+                <h1> Famous Poets:</h1>
     
                 <div className = "poet-wheel">
     
                     <div className = 'poet-wheel-data'>
     
-                    {uniquePoets.map((poetName, index) => {
+                    {uniquePoets.map((poetName) => {
     
-                    const image = poetImages[index % poetImages.length]; //rotate images
+                    const image = poetImages[poetName]; //rotate images
     
                     return (
                         <Link key = {poetName} to = {`poet/${encodeURIComponent(poetName)}`}>
-                            <PoetCard poetName = {poetName} image = {image}/>
+                            <PoetCard poetName = {poetName} image = {image} lang="en"/>
                         </Link>
                     )
                     })}
@@ -50,7 +57,7 @@ function EnglishHomePage({ poems }){
     
                     </div>
     
-                    <h1 className="scroll notification">Scrollable→</h1>
+                    <h1 className="scroll-notification">Scrollable→</h1>
                 </div>
             </div>
     

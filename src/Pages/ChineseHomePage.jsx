@@ -16,16 +16,16 @@ function ChineseHomePage({ poems }) {
     const uniquePoets = [...new Set(poems.map(poem => poem.poet_en))];
 
    return ( 
-    <div className = 'homepage'>
+    <div className = 'cn-homepage'>
 
-    <div className = "content">
+    <div className = "cn-content">
 
-        <div className = 'title-bar'>
-            <h1 className = 'welcome-text'>Welcome Back!</h1>
+        <div className = 'cn-title-bar'>
+            <h1 className = 'cn-welcome-text'>Welcome Back!</h1>
             <NavBar/>
         </div>
 
-        <div className = 'imgBackground'></div>
+        <div className = 'cn-imgBackground'></div>
 
         <div className = "collection">
 
@@ -41,7 +41,7 @@ function ChineseHomePage({ poems }) {
 
                 return (
                     <Link key = {poetName} to = {`poet/${encodeURIComponent(poetName)}`}>
-                        <PoetCard poetName = {poetName} image = {image}/>
+                        <PoetCard poetName = {poetName} image = {image} lang = "zh"/>
                     </Link>
                 )
                 })}
@@ -50,7 +50,7 @@ function ChineseHomePage({ poems }) {
 
                 </div>
 
-                <h1 className="scroll notification">Scrollable→</h1>
+                <h1 className="scroll-notification">Scrollable→</h1>
             </div>
         </div>
 

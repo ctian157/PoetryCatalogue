@@ -11,11 +11,12 @@ function PoetPage ({ poemsByLanguage }) {
 
     // /poet/:poetName was dynamic URL routing, poetName was marked as a parameter
     //change to Javascript object
-    const { lang } = useParams();
-    const { poetName } = useParams(); 
+    const { lang, poetName } = useParams();
     const actualName = decodeURIComponent(poetName);
 
-    const filteredPoems = poemsByLanguage[lang].filter(p => p.poet_en === actualName);
+    const filteredPoems = 
+      lang === "zh" ? poemsByLanguage[lang].filter(p => p.poet_en === actualName)
+                    : poemsByLanguage[lang].filter(p => p.poet === actualName);
 
     return (
 

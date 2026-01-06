@@ -1,0 +1,75 @@
+.en-explore-page{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.en-explore-content {
+    width:70vw;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #002B4D 20%, #1750AC 60%,#006CA5 );
+    display:flex;
+    flex-direction: column;
+    align-items: center; /*horizontal alignment since default is column this time*/
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+.en-explore-title-bar{
+    width:100%;
+    height:10vh;
+    min-height:120px;
+    background: linear-gradient(to bottom, #847661, #DEC6A1);
+    display:flex;
+    justify-content: space-between; /*pushes nav bar to other end*/
+    padding: 2rem 1rem 1rem; /* Responsive padding */
+    margin-bottom: 20px;
+    gap: 10px; 
+    box-sizing: border-box;
+}
+
+.en-explore-text {
+    font-family:'Ma Shan Zheng';
+    font-size: clamp(1.5rem, 4vw, 3rem); /* responsive font size */
+    font-weight: 100;
+    color: #744343;
+    margin: 0; /*h1 elements come with default margins*/
+}
+
+.create-button{
+    position:absolute;
+    top: 15%; 
+    left: 20%; 
+    width:100px;
+    height:60px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family:'Inknut Antiqua';
+    transition: transform 0.2s ease-in-out;
+}
+
+.create-button:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+
+.search-bar{
+    box-sizing: border-box;
+    width: 300px;          
+    height: 40px;         
+    padding: 8px 12px;  
+    font-size: 1rem;
+    font-family:'Inknut Antiqua';
+    border-color:#000;
+    border: solid;
+    border-radius: 8px; 
+}
+
+.en-poem-library{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px; 
+    padding: 5% 10%; 
+    box-sizing: border-box;
+}

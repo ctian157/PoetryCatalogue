@@ -2,7 +2,6 @@ import "./EnglishExplorePage.css"
 import LanguagePoemCard from "../Components/LanguagePoemCard"
 import LanguagePoemDisplay from "../Components/LanguagePoemDisplay";
 import AddPoemCard from "../Components/AddPoemCard";
-import { useParams } from 'react-router-dom';
 import NavBar from "../Components/NavBar";
 
 //receives the poems list from App as a prop
@@ -27,10 +26,10 @@ function EnglishExplorePage ({
 
     return (
     
-        <div className = "explore-page">
-            <div className = "explore-content">
-                <div className = 'explore-title-bar'>
-                    <h1 className = 'explore-text'>Explore</h1>
+        <div className = "en-explore-page">
+            <div className = "en-explore-content">
+                <div className = 'en-explore-title-bar'>
+                    <h1 className = 'en-explore-text'>Explore</h1>
                     <NavBar/>
                 </div>
 
@@ -41,7 +40,7 @@ function EnglishExplorePage ({
                         value = {searchTerm}
                         onChange = {(e) => setSearchTerm(e.target.value)}/>
 
-                <div className = 'poem-library'>
+                <div className = 'en-poem-library'>
                         {filteredPoems.map((p) => (
                             <LanguagePoemCard   
                                         key={p.id} 
@@ -88,7 +87,6 @@ function EnglishExplorePage ({
                     </div>
                 )}
             
-
             </div>
         </div>
     )
