@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-//to sync favorite states across all omponents
+//to sync favorite states across all components
 const FavoritesContext = createContext();
 
 export function FavoritesProvider ({children}) {

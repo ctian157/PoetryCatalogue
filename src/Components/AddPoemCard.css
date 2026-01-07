@@ -11,7 +11,7 @@
 
 
 .creation-screen {
-    background-image: url('../assets/WaterTown.jpeg');
+    background-image: url('../assets/TypeWriter.webp');
     background-size: cover;
     flex: 1; /* Makes it fill any available space in the parent*/
     width:600px;

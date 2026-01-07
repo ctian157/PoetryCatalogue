@@ -1,14 +1,21 @@
-import "./ExplorePage.css"
-import PoemCard from "../Components/PoemCard"
-import PoemDisplay from "../Components/PoemDisplay";
-import AddPoemCard from "../Components/AddPoemCard";
-import { Link } from 'react-router-dom';
-import { useState } from "react";
+import { useParams} from 'react-router-dom';
+import { useState, useEffect } from "react";
 import useFavorites from "../Hooks/useFavorites"
 import pinyin from 'pinyin';
+import ChineseExplorePage from "./ChineseExplorePage";
+import EnglishExplorePage from "./EnglishExplorePage";
 
 //receives the poems list from App as a prop
-function ExplorePage ({ poems, setPoems }) {
+function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguage }) {
+
+    const { lang } = useParams(); 
+
+    
+    useEffect(() => { 
+        if (!poemsByLanguage[lang]|| poemsByLanguage[lang].length === 0) { 
+            fetchPoemsByLanguage(lang); 
+        } 
+    }, [lang]);
 
     //methods from useFavorites.js
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
@@ -26,7 +33,6 @@ function ExplorePage ({ poems, setPoems }) {
     //for loading text when calling Gemini
     const [loading, setLoading] = useState(false);
 
-
      //to temporarily store state of fields to be added
      const [newPoem, setNewPoem] = useState({
         title: '',
@@ -36,10 +42,11 @@ function ExplorePage ({ poems, setPoems }) {
         content: ''
     });
 
-
+    const poems = poemsByLanguage[lang] || [];
+    
     //for error messages
     const [errorMessage, setErrorMessage] = useState("");
-
+    
 
     //for romanized search (定風波 -> "ding feng bo")
     const poemsWithPinyin = poems.map(poem => ({
@@ -58,7 +65,6 @@ function ExplorePage ({ poems, setPoems }) {
         poem.content.toLowerCase().includes(userInput)
     );
     
-
     //maintains favorites
     const handleToggleFavorite = (poem) => {
         if (isFavorite(poem.id)) {
@@ -87,7 +93,7 @@ function ExplorePage ({ poems, setPoems }) {
             alert(`Poem deleted`);
 
             //re-render UI upon state change
-            setPoems((prev) => prev.filter((p) => (p.id !== poemID)));
+            setPoemsByLanguage((prev) => ({...prev, [lang]: prev[lang].filter(p => p.id !== poemID)}));
 
             //remove from Favorites as well if it's in there
             if (isFavorite(poemID)) {
@@ -122,7 +128,9 @@ function ExplorePage ({ poems, setPoems }) {
             const updatedPoem = await response.json(); //convert returned response body JSON into Javascript object
 
             //update local array of poems, replacing old poem with new and keeping index in array
-            setPoems(prev=>prev.map((p) => (p.id === updatedPoem.id ? updatedPoem : p)))
+            setPoemsByLanguage(prev => ({...prev, 
+                                        [lang]: prev[lang].map(p => 
+                                            (p.id === updatedPoem.id ? updatedPoem : p))}))
                 
             //Displays updated poem automatically for user
             setSelectedPoem(updatedPoem);
@@ -136,7 +144,7 @@ function ExplorePage ({ poems, setPoems }) {
     const handlePost = async(newPoem) => {
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem?language=${lang}`, {
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
                 body:JSON.stringify(newPoem)
@@ -159,11 +167,11 @@ function ExplorePage ({ poems, setPoems }) {
                 poet: '',
                 poet_en: '',
                 dynasty: '',
-                content: ''
+                content: '',
             });
 
             //re-render UI (savedPoem has id whereas newPoem doesn't!)
-            setPoems(prev => [...prev, savedPoem]);
+            setPoemsByLanguage(prev => ({...prev, [lang]: [...prev[lang], savedPoem]}));
 
             //close the AddPoem window
             setIsCreating(false);
@@ -190,7 +198,9 @@ function ExplorePage ({ poems, setPoems }) {
             const translatedPoem = await response.json();
 
             //update local array of poems, replacing old poem with new and keeping index in array
-            setPoems(prev=>prev.map((p) => (p.id === translatedPoem.id ? translatedPoem : p)))
+            setPoemsByLanguage(prev => ({...prev,
+                                            [lang]: prev[lang].map(p => 
+                                                (p.id === translatedPoem.id ? translatedPoem : p))}))
                 
 
             //display with translation
@@ -205,76 +215,33 @@ function ExplorePage ({ poems, setPoems }) {
 
     }
 
+    const explorePages = {
+        zh: ChineseExplorePage,
+        en: EnglishExplorePage
+    };
+    
+    const ExplorePage=explorePages[lang];
 
     return (
-    
-        <div className = "explore-page">
-            <div className = "explore-content">
-                <div className = 'explore-title-bar'>
-                    <h1 className = 'explore-text'>Explore</h1>
-                    <div className = 'explore-button-bar'> 
-                        <Link to= "/">Home</Link>
-                        <div className = "vertical-line">|</div>
-                        <Link to= "/favorites">Favorites</Link>
-                        <div className = "vertical-line">|</div>
-                        <Link to= "/explore">Explore</Link>
-                    </div>
-                </div>
-
-                <button className = "create-button" onClick = {() => setIsCreating(true)}>Create </button>
-
-                <input  className = "search-bar" 
-                        placeholder = "Search poem..."
-                        value = {searchTerm}
-                        onChange = {(e) => setSearchTerm(e.target.value)}/>
-
-                <div className = 'poem-library'>
-                        {filteredPoems.map((p) => (
-                            <PoemCard   key={p.id} 
-                                        poem={p} 
-                                        onClick = {() => setSelectedPoem(p)}
-                                        onToggleFavorite = {() => handleToggleFavorite(p)}/>
-                            ))}
-                </div>
-                
-                {selectedPoem && (
-                <PoemDisplay    poem = {selectedPoem} 
-                                onClose = {() =>setSelectedPoem(null)}
-                                onUpdate = {handleUpdate}
-                                onDelete = {handleDelete}
-                                onAllowUpdateAndDelete={true}
-                                onTranslate = {handleTranslate}
-                                loading = {loading}/>
-                )}
-                
-                <AddPoemCard    isCreating = {isCreating} 
-                                newPoem = {newPoem}
-                                setNewPoem = {setNewPoem}
-                                onClose = {() => setIsCreating(false)}
-                                onSubmit = {handlePost}/>
-
-
-                {errorMessage && (
-                    <div style={{
-                        position: 'fixed',
-                        top: '20px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        backgroundColor: '#e74c3c',
-                        color: 'white',
-                        padding: '10px 20px',
-                        borderRadius: '8px',
-                        zIndex: 1000,
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-                      }}>
-                        {errorMessage}
-                    </div>
-                )}
-            
-
-            </div>
-        </div>
+        <ExplorePage 
+        lang={lang}
+        filteredPoems={filteredPoems}
+        selectedPoem={selectedPoem}
+        setSelectedPoem={setSelectedPoem}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        isCreating={isCreating}
+        setIsCreating={setIsCreating}
+        newPoem={newPoem}
+        setNewPoem={setNewPoem}
+        onDelete={handleDelete}
+        onUpdate={handleUpdate}
+        onPost={handlePost}
+        onTranslate={handleTranslate}
+        loading={loading}
+        errorMessage={errorMessage}
+        onToggleFavorite={handleToggleFavorite}/>
     )
 }
 
-export default ExplorePage;
+export default LanguageExplore;

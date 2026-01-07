@@ -1,13 +1,13 @@
-.explore-page{
+.en-explore-page{
     box-sizing: border-box;
     display: flex;
     justify-content: center;
 }
 
-.explore-content {
+.en-explore-content {
     width:70vw;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #71DACA 54%, #214A45 82%);
+    background: linear-gradient(to bottom, #002B4D 20%, #1750AC 60%,#006CA5 );
     display:flex;
     flex-direction: column;
     align-items: center; /*horizontal alignment since default is column this time*/
@@ -15,7 +15,7 @@
     box-sizing: border-box;
 }
 
-.explore-title-bar{
+.en-explore-title-bar{
     width:100%;
     height:10vh;
     min-height:120px;
@@ -28,36 +28,13 @@
     box-sizing: border-box;
 }
 
-.explore-text {
+.en-explore-text {
     font-family:'Ma Shan Zheng';
     font-size: clamp(1.5rem, 4vw, 3rem); /* responsive font size */
     font-weight: 100;
     color: #744343;
     margin: 0; /*h1 elements come with default margins*/
 }
-
-.explore-button-bar{
-    display: flex;
-    align-items: center;
-}
-
-.explore-button-bar a{
-    font-family:'Inknut Antiqua';
-    font-size: clamp(1rem, 1vw, 1.4rem); /* responsive font size */
-    font-weight: 100; 
-    text-decoration: none;
-    color:#000;
-    background: transparent;
-    margin:10px;
-    transition: transform 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-.explore-button-bar a:hover {
-    color: #000;           /* Don't change color */
-    transform: scale(1.1);
-    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
-  }
 
 .create-button{
     position:absolute;
@@ -88,7 +65,7 @@
     border-radius: 8px; 
 }
 
-.poem-library{
+.en-poem-library{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

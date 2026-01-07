@@ -1,19 +1,34 @@
 import './PoetPage.css'
-import PoemCard from '../Components/PoemCard'
-import PoemDisplay from '../Components/PoemDisplay';
-import { Link, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import LanguagePoemCard from '../Components/LanguagePoemCard'
+import LanguagePoemDisplay from '../Components/LanguagePoemDisplay';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import NavBar from '../Components/NavBar';
 
-function PoetPage ({ poems }) {
+function PoetPage ({ fetchPoemsByLanguage }) {
 
+    const [poems, setPoems] = useState([]);
     const [selectedPoem, setSelectedPoem] = useState(null);
 
     // /poet/:poetName was dynamic URL routing, poetName was marked as a parameter
     //change to Javascript object
-    const { poetName } = useParams(); 
+    const { lang, poetName } = useParams();
     const actualName = decodeURIComponent(poetName);
 
-    const filteredPoems = poems.filter(p => p.poet_en === actualName);
+    //do this here instead so that refreshing poetpage does not lose the poems to state reset
+    useEffect(()=> {
+      async function loadPoems() {
+        const fetchedPoems = await fetchPoemsByLanguage(lang);
+        const filteredPoems = fetchedPoems.filter (
+          p =>(lang === "zh" ? p.poet_en === actualName : p.poet === actualName)
+        );
+
+        setPoems(filteredPoems);
+      }
+
+      loadPoems();
+
+    }, [lang, actualName]);
 
     return (
 
@@ -23,29 +38,23 @@ function PoetPage ({ poems }) {
 
             <h1 className = 'poet-text'>{actualName}</h1> 
 
-            <div className = 'poet-button-bar'> 
-                <Link to= "/">Home</Link>
-                  <div className = "vertical-line">|</div>
-                <Link to= "/favorites">Favorites</Link>
-                  <div className = "vertical-line">|</div>
-                <Link to= "/explore">Explore</Link>
-            </div>
+            <NavBar/>
 
           </div>
 
-          <p>Poems may be edited or deleted only on the Explore page ~</p>
+          <p> Poems may be edited or deleted only on the Explore page ~ </p>
 
           <div className = "poet-library">
 
-              {filteredPoems.length === 0 ? (
+              {poems.length === 0 ? (
                 <p>No poems found for this poet.</p>
               ) : (
-                filteredPoems.map((p) => (
-                <PoemCard key = {p.id} poem={p} onClick = {() => {setSelectedPoem(p)}}/>
+                poems.map((p) => (
+                <LanguagePoemCard key = {p.id} poem={p} lang={lang} onClick = {() => {setSelectedPoem(p)}}/>
                 ))
               )}
 
-              <PoemDisplay poem = {selectedPoem} onClose = {() =>setSelectedPoem(null)}/>
+              <LanguagePoemDisplay poem = {selectedPoem} lang={lang} onClose = {() =>setSelectedPoem(null)}/>
             
           </div>
 

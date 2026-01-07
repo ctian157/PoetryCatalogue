@@ -1,6 +1,4 @@
 import './AddPoemCard.css'
-import { useState } from 'react';
-
 
 
 function AddPoemCard ( {isCreating, newPoem, setNewPoem, onClose, onSubmit} ) {

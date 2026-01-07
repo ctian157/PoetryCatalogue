@@ -1,9 +1,9 @@
-import './PoemCard.css'
+import './ChinesePoemCard.css'
 import InkBranch from '../assets/InkBranch.png'
 import useFavorites from '../Hooks/useFavorites';
 
 //accepts a prop (which in this case is a json object)
-function PoemCard ({ poem, onClick }) {
+function ChinesePoemCard ({ poem, onClick }) {
 
     //object destructure; assign isFavorite to the method from useFavorites with the same name
     const { isFavorite } = useFavorites();
@@ -32,4 +32,4 @@ function PoemCard ({ poem, onClick }) {
     )
 }
 
-export default PoemCard;
+export default ChinesePoemCard;

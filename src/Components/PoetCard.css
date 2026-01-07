@@ -1,6 +1,7 @@
 .poet-card{
     width: 220px; 
     height: 300px;
+    position:relative;
     background-size: cover; /*have image fit to container*/
     background-position: center;
     transition: transform 0.2s ease-in-out;
@@ -12,13 +13,25 @@
     text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
 }
 
-.poet-name{
+.poet-name-horizontal{
+    color: black;  
+    position:absolute;
+    bottom:0; /*pin name to bottom of poet card*/
+    width:91%;
+    font-size: 0.4rem;
+    line-height: 1rem;  
+    background-color: white;
+    padding:10px;
+    text-decoration: none;     
+}
+
+.poet-name-vertical{
     color: black;  
     font-size: 0.4rem;
     writing-mode: vertical-rl; /* vertical from top to bottom, right to left */
     text-orientation: upright;
     line-height: 1rem;  
-    letter-spacing: -10px;
+    letter-spacing: -10px; 
     background-color: white;
     padding:10px;
     text-decoration: none;     

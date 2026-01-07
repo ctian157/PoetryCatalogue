@@ -1,10 +1,10 @@
-.favorites-page{
+.cn-explore-page{
     box-sizing: border-box;
     display: flex;
     justify-content: center;
 }
 
-.favorites-content {
+.cn-explore-content {
     width:70vw;
     min-height: 100vh;
     background: linear-gradient(to bottom, #71DACA 54%, #214A45 82%);
@@ -15,13 +15,7 @@
     box-sizing: border-box;
 }
 
-.favorites-content p{
-    font-family: 'Inknut Antiqua';
-    font-size: small;
-    font-style: italic;   
-}
-
-.favorites-title-bar{
+.cn-explore-title-bar{
     width:100%;
     height:10vh;
     min-height:120px;
@@ -34,7 +28,7 @@
     box-sizing: border-box;
 }
 
-.favorites-text {
+.cn-explore-text {
     font-family:'Ma Shan Zheng';
     font-size: clamp(1.5rem, 4vw, 3rem); /* responsive font size */
     font-weight: 100;
@@ -42,34 +36,27 @@
     margin: 0; /*h1 elements come with default margins*/
 }
 
-.favorites-button-bar{
-    display: flex;
-    align-items: center;
-}
-
-.favorites-button-bar a{
+.create-button{
+    position:absolute;
+    top: 15%; 
+    left: 20%; 
+    width:100px;
+    height:60px;
+    border-radius: 5px;
+    font-size: 1rem;
     font-family:'Inknut Antiqua';
-    font-size: clamp(1rem, 1vw, 1.4rem); /* responsive font size */
-    font-weight: 100; 
-    text-decoration: none;
-    color:#000;
-    background: transparent;
-    margin:10px;
     transition: transform 0.2s ease-in-out;
-    cursor: pointer;
 }
 
-.favorites-button-bar a:hover {
-    color: #000;           /* Don't change color */
+.create-button:hover {
     transform: scale(1.1);
     text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
-}
+  }
 
-
-.favorites-search-bar{
+.search-bar{
     box-sizing: border-box;
-    width: 300px;          /* Adjust as needed */
-    height: 40px;          /* Increase height */
+    width: 300px;          
+    height: 40px;         
     padding: 8px 12px;  
     font-size: 1rem;
     font-family:'Inknut Antiqua';
@@ -78,7 +65,7 @@
     border-radius: 8px; 
 }
 
-.favorites-library{
+.cn-poem-library{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

@@ -1,0 +1,64 @@
+import './ChineseHomePage.css'
+import '../Components/PoetCard.css'
+import PoetCard from '../Components/PoetCard';
+import MountainSun from '../assets/MountainSun.jpg';
+import MountainStream from '../assets/MountainStream.jpg';
+import MountainBlossoms from '../assets/MountainBlossoms.jpg';
+import { Link } from 'react-router-dom';
+import NavBar from '../Components/NavBar';
+
+//renders its children, ie Outlet/routes from LanguageHome
+function ChineseHomePage({ poems }) {
+
+    //poet image rotation array
+    const poetImages = [MountainSun, MountainBlossoms, MountainStream];
+    //array of distinct poets by spreading Set into array
+    const uniquePoets = [...new Set(poems.map(poem => poem.poet_en))];
+
+   return ( 
+    <div className = 'cn-homepage'>
+
+    <div className = "cn-content">
+
+        <div className = 'cn-title-bar'>
+            <h1 className = 'cn-welcome-text'>
+                    Chinese Poetry </h1>
+            <h2 className = 'cn-quote'>
+                    落霞与孤鹜齐飞，秋水共长天一色～ </h2>
+            <NavBar/>
+        </div>
+
+        <div className = 'cn-imgBackground'></div>
+
+        <div className = "collection">
+
+            <h1> The Collection:</h1>
+
+            <div className = "poet-wheel">
+
+                <div className = 'poet-wheel-data'>
+
+                {uniquePoets.map((poetName, index) => {
+
+                const image = poetImages[index % poetImages.length]; //rotate images
+
+                return (
+                    <Link key = {poetName} to = {`poet/${encodeURIComponent(poetName)}`}>
+                        <PoetCard poetName = {poetName} image = {image} lang = "zh"/>
+                    </Link>
+                )
+                })}
+
+                </div>
+
+                </div>
+
+                <h1 className="scroll-notification">Scrollable→</h1>
+            </div>
+        </div>
+
+    </div>
+    )
+}
+
+export default ChineseHomePage;
