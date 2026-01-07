@@ -73,7 +73,7 @@
 .en-imgBackground{
     width: 100%;               /* scale to container width */
     aspect-ratio: 1439 / 959;  /* maintain original aspect ratio */
-    background-image: url('/public/EnglishLandscape.jpg'); /* in public to be accessible */
+    background-image: url('/EnglishLandscape.jpg'); /* in public to be accessible */
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;

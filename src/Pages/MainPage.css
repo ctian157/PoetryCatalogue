@@ -1,7 +1,141 @@
-.language-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem; /* spacing between links */
-  }
+.main-page {
+  background: linear-gradient(to bottom, #2d50b7, #3f72b9);
+  min-height: 100vh;
+}
 
-  
+.main-title-bar {
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('/BirdsSilhouette.png');
+  background-repeat: no-repeat;
+  background-size: cover;  
+  width:100%;
+  height:20vh;
+  background-position: center;  
+  color: Grey;
+  padding-top:3rem;
+  padding-bottom: 1rem;
+}
+
+.language-links {
+    position:absolute;
+    bottom:2rem;
+    left:1.4rem;
+    display: flex;
+    gap: 1.5rem; /* spacing between links */
+}
+
+.language-links a{
+  text-decoration: none;
+  color:black;
+  font-family: 'Inknut Antiqua';
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  height: 1em;
+  border-right: 2px solid black;
+  padding-right: 1.5rem; /*for space between links and vert line */
+  line-height: 1; /*line height matches font height exactly*/
+}
+
+.language-links a:hover {
+  color: #000;/* Don't change color */
+  transform: scale(1.1);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+
+.language-links p {
+  color:black;
+  font-size:1.2rem;
+}
+
+.main-body{
+  display: flex;
+  justify-content: center; /* horizontal */
+  min-height: 100vh;  
+}
+
+.poem-container {
+  display:flex;
+  width:80vw;
+  max-width: 1200px;
+  height:70vh;
+  gap:1.5rem;
+  padding:2rem;
+  padding-top:4rem;
+}
+
+
+.left-box{
+  flex: 3; /* 60% of container (3/(3+2) = 60%) */
+  min-width: 0; /* Allow flex item to shrink */
+}
+
+.left-box img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.right-boxes{
+  display:flex;
+  flex-direction: column;
+  flex: 2;
+  gap: 1rem; /* Space between the boxes */
+  min-width: 0; /* Allow flex item to shrink */
+  min-height: 0; /* Allow flex item to shrink vertically */
+  max-height: 100%; /* Never exceed parent height */
+  overflow-y: auto;
+}
+
+.right-boxes h2 {
+  font-family: 'Inknut Antiqua';
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  flex-shrink: 0; /*Don't allow the title to shrink*/
+}
+
+.right-box{
+  background-color: #f5f5dc; /* Beige color */
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 180px;
+  justify-content: flex-start;
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow scrolling if content is too long */
+  min-height: 0; /* Allow flex item to shrink */
+}
+
+.right-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.poem-title-preview {
+  font-family: 'Inknut Antiqua';
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.poem-content-full {
+  font-family: 'Inknut Antiqua';
+  font-size: 1rem;
+  margin: 0;
+  color: #555;
+  white-space: pre-wrap; /* Preserve line breaks and wrap text */
+  line-height: 1.6;
+  flex: 1;
+  overflow-y: auto; /* Allow scrolling if needed */
+}

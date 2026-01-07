@@ -58,12 +58,10 @@ function App() {
         }
     }
 
-    /*//Probably not gonna render poems here yet
+    //Calling here for MainPage random selection of featured poems. Should probably find a better way to do this later.
     useEffect(() => {
-        fetchPoemsByLanguage();
+        fetchAllPoems();
     }, []);
-    */
-    
 
     return(
         <FavoritesProvider>
