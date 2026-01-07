@@ -1,5 +1,5 @@
 .main-page {
-  background: linear-gradient(to bottom, #2d50b7, #3f72b9);
+  background: linear-gradient(to bottom, #4662b4, #5a85c1);
   min-height: 100vh;
 }
 
@@ -98,12 +98,13 @@
   font-weight: 600;
   margin: 0;
   padding: 0;
-  color: #333;
+  color: rgba(255, 255, 255, 0.781);
   flex-shrink: 0; /*Don't allow the title to shrink*/
 }
 
 .right-box{
-  background-color: #f5f5dc; /* Beige color */
+  background-color: #a7ccdd;
+  background: linear-gradient(to bottom, #dfcd99c8 42%, #ddcca7 82%);
   display: flex;
   flex-direction: column;
   flex: 0 0 180px;

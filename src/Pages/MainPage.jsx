@@ -4,8 +4,19 @@ import "./MainPage.css"
 import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
 
 function MainPage({poems}) {
-    // Select 3 featured poems (or first 3 if less than 3 available)
-    const featuredPoems = poems.length > 0 ? poems.slice(0, 5) : [];
+    const featured1 = poems.find(p => p.id === 356);
+    const featured2 = poems.find(p => p.id === 757);
+
+    // Build featured poems list: id=356 first, id=757 second, filter undefined if necessary
+    const featuredPoems = [featured1, featured2].filter(Boolean);
+    
+    if (poems.length > 0) {
+        // Filter out the two featured poems
+        const otherPoems = poems.filter(p => p.id !== 356 && p.id !== 757);
+        
+        featuredPoems.push(...otherPoems.slice(0, 4));
+    }
+
     const [selectedPoem, setSelectedPoem] = useState(null);
 
     return (
@@ -23,7 +34,7 @@ function MainPage({poems}) {
 
             <div className="poem-container">
                 <div className="left-box">
-                    <img src="/BoyWithBirds.webp"/>
+                    <img src="/OceanWaves.jpg"/>
                 </div>
 
                 <div className="right-boxes">
