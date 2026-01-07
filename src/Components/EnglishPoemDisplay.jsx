@@ -1,5 +1,5 @@
 import './EnglishPoemDisplay.css'
-import MoonlightBoatRide from '../assets/MoonlightBoatRide.jpeg'
+import StarryNight from '../assets/StarryNight.jpg'
 import Frame from '../assets/ChineseFrame.png'
 
 //take poem and onClose from ExplorePage as props
@@ -11,7 +11,7 @@ function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
 
             <div className = "modal-content">
                 
-                <img className = "decorative-background" src = {MoonlightBoatRide}/>
+                <img className = "decorative-background" src = {StarryNight}/>
 
                     <div className = "quick-action">
                         <button className = "close-button" 
