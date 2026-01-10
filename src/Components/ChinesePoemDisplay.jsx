@@ -102,7 +102,7 @@ function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
                                 </div>)
                                 }
                             </div>
-
+                            {/*For now, disable translation button on pages that don't translate*/}
                             <div className = "translation">
                                 {poem.translation ? (
                                 <div className = "translation-text">
@@ -110,9 +110,14 @@ function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
                                     <p>{poem.translation}</p>
                                 </div>
                                 ) : (
-                                <button className = "translate-button" onClick = {() => onTranslate(poem.id)} disabled={loading}>
-                                    {loading ? "Translating...": "Translate Poem"}
-                                </button>
+                                    onTranslate &&(
+                                        <button className = "translate-button" 
+                                        onClick = {() => onTranslate(poem.id)} 
+                                        disabled={loading}
+                                        >
+                                            {loading ? "Translating...": "Translate Poem"}
+                                        </button>
+                                    )
                                 )}
                             </div>
                             </div>
