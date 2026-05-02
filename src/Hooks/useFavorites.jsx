@@ -9,8 +9,8 @@ export function FavoritesProvider ({children}) {
     //upon initial render, access data from localStorage if available and use as state
     const [favorites, setFavorites] = useState(() => {
 
-        const storedFavorites = localStorage.getItem('favorited'); //take the favorited JSON string..
-        return storedFavorites ? JSON.parse(storedFavorites): []; //turn into giant JavaScript object with inner objects
+        const storedFavorites = localStorage.getItem('favorited'); //take the favorited JSON string.
+        return storedFavorites ? JSON.parse(storedFavorites): []; //turn string into giant JavaScript object
         
     });
 
@@ -26,7 +26,7 @@ export function FavoritesProvider ({children}) {
         setFavorites((prev) => prev.filter((p) => p.id !== poemId));
     };
 
-    //check if poem is already in favorited list; does ANY poem in list match with current?
+    //check if poem is already in favorited list
     const isFavorite = (poemId) => {
         return favorites.some(p => p.id === poemId);
     };
@@ -39,7 +39,7 @@ export function FavoritesProvider ({children}) {
         }
       };
 
-    //export as an object with the list, and the three functions
+    //export as an object with the array, and the functions
     return (
 
         <FavoritesContext.Provider value = {{ favorites, addFavorite, removeFavorite, isFavorite, toggleFavorite }}>
@@ -48,9 +48,9 @@ export function FavoritesProvider ({children}) {
     )
 }
 
-//custom hook so we don't have to write 'useContext(FavoritesContext)' every time it's used and can just useFavorites
+//custom hook
 function useFavorites() {
-    return useContext(FavoritesContext);
+    return useContext(FavoritesContext);//subscribes component to custom FavoritesContext
 };
 
 export default useFavorites;

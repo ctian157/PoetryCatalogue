@@ -7,7 +7,6 @@ import MountainBlossoms from '../assets/MountainBlossoms.jpg';
 import { Link } from 'react-router-dom';
 import NavBar from '../Components/NavBar';
 
-//renders its children, ie Outlet/routes from LanguageHome
 function ChineseHomePage({ poems }) {
 
     //poet image rotation array

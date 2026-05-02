@@ -4,6 +4,7 @@ import LanguagePoemDisplay from '../Components/LanguagePoemDisplay';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NavBar from '../Components/NavBar';
+import { getLanguageConfig } from '../config/languages';
 
 function PoetPage ({ fetchPoemsByLanguage }) {
 
@@ -14,13 +15,20 @@ function PoetPage ({ fetchPoemsByLanguage }) {
     //change to Javascript object
     const { lang, poetName } = useParams();
     const actualName = decodeURIComponent(poetName);
+    const config = getLanguageConfig(lang);
 
     //do this here instead so that refreshing poetpage does not lose the poems to state reset
     useEffect(()=> {
+      if (!config) {
+        setPoems([]);
+        return;
+      }
+
       async function loadPoems() {
         const fetchedPoems = await fetchPoemsByLanguage(lang);
+        const poetField = config.poetField;
         const filteredPoems = fetchedPoems.filter (
-          p =>(lang === "zh" ? p.poet_en === actualName : p.poet === actualName)
+          p => p[poetField] === actualName
         );
 
         setPoems(filteredPoems);
@@ -28,7 +36,11 @@ function PoetPage ({ fetchPoemsByLanguage }) {
 
       loadPoems();
 
-    }, [lang, actualName]);
+    }, [lang, actualName, config, fetchPoemsByLanguage]);
+
+    if (!config) {
+      return <div>Language not supported.</div>;
+    }
 
     return (
 

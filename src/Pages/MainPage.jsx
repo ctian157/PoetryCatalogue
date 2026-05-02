@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import "./MainPage.css"
 import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
+import { LANGUAGE_CODES, LANGUAGES } from '../config/languages';
 
 function MainPage({poems}) {
     const featured1 = poems.find(p => p.id === 356);
@@ -25,8 +26,11 @@ function MainPage({poems}) {
                 <h1>Poems Around the World</h1>
 
                 <div className = "language-links">
-                <Link to='/zh'>Chinese</Link>
-                <Link to='/en'>English</Link>
+                {LANGUAGE_CODES.map((code) => (
+                    <Link key={code} to={LANGUAGES[code].navPath}>
+                        {LANGUAGES[code].name}
+                    </Link>
+                ))}
                 </div>
             </div>
 

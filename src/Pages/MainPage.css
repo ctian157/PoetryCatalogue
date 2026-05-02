@@ -41,7 +41,7 @@
 }
 
 .language-links a:hover {
-  color: #000;/* Don't change color */
+  color: #000;
   transform: scale(1.1);
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
 }

@@ -2,20 +2,20 @@ import { useParams} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import useFavorites from "../Hooks/useFavorites"
 import pinyin from 'pinyin';
-import ChineseExplorePage from "./ChineseExplorePage";
-import EnglishExplorePage from "./EnglishExplorePage";
+import { getLanguageConfig } from '../config/languages';
 
 //receives the poems list from App as a prop
 function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguage }) {
 
     const { lang } = useParams(); 
+    const config = getLanguageConfig(lang);
 
     
     useEffect(() => { 
-        if (!poemsByLanguage[lang]|| poemsByLanguage[lang].length === 0) { 
+        if (config && (!poemsByLanguage[lang]|| poemsByLanguage[lang].length === 0)) { 
             fetchPoemsByLanguage(lang); 
         } 
-    }, [lang]);
+    }, [lang, config, poemsByLanguage, fetchPoemsByLanguage]);
 
     //methods from useFavorites.js
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
@@ -215,12 +215,11 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
 
     }
 
-    const explorePages = {
-        zh: ChineseExplorePage,
-        en: EnglishExplorePage
-    };
-    
-    const ExplorePage=explorePages[lang];
+    const ExplorePage = config?.exploreComponent;
+
+    if (!ExplorePage) {
+        return <div>Language not supported.</div>;
+    }
 
     return (
         <ExplorePage 

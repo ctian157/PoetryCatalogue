@@ -47,7 +47,7 @@ function App() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();// turns JSON response body into array of JavaScriptobjects
+            const data = await response.json();// turns JSON response body into array of JavaScript objects
 
             setPoemsByLanguage(prev => ({...prev, [lang]: data})); 
             return data; //for poetPage and other components that use this async method
@@ -71,13 +71,13 @@ function App() {
                     element = {<MainPage poems={poemsByLanguage.all}/>}/>
 
             {/* parameterized/dynamic routing for lang, lang also allowed to define nested routes */}
-            {/* lang does not wrap anything bc no element tag, so it only groups nested routes, does not wrap them with anything (ie display a page)*/}
+            {/* 'lang' route does not wrap/render anything; it only groups nested routes*/}
             <Route path = "/:lang" >
 
                 {/*default route*/}
                 <Route 
                     index
-                    element = {<LanguageHome
+                    element = {<LanguageHome 
                                 poemsByLanguage={poemsByLanguage}
                                 fetchPoemsByLanguage={fetchPoemsByLanguage}/>}/>
                 
