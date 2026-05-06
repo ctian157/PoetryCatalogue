@@ -1,11 +1,11 @@
 import './ChineseHomePage.css'
-import '../../Components/PoetCard.css'
-import PoetCard from '../../Components/PoetCard';
+import '../../components/PoetCard.css'
+import PoetCard from '../../components/PoetCard';
 import MountainSun from '../../assets/MountainSun.jpg';
 import MountainStream from '../../assets/MountainStream.jpg';
 import MountainBlossoms from '../../assets/MountainBlossoms.jpg';
 import { Link } from 'react-router-dom';
-import NavBar from '../../Components/NavBar';
+import NavBar from '../../components/NavBar';
 
 function ChineseHomePage({ poems }) {
 

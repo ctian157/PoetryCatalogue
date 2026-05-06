@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from './Pages/MainPage';
-import LanguageHome from './Pages/LanguageHome'
-import { FavoritesProvider } from './Hooks/useFavorites';
-import FavoritesPage from './Pages/FavoritesPage';
-import LanguageExplore from './Pages/LanguageExplore';
-import PoetPage from './Pages/PoetPage'; 
+import MainPage from './pages/MainPage';
+import LanguageHome from './pages/LanguageHome'
+import { FavoritesProvider } from './hooks/useFavorites';
+import FavoritesPage from './pages/FavoritesPage';
+import LanguageExplore from './pages/LanguageExplore';
+import PoetPage from './pages/PoetPage'; 
 import { LANGUAGE_CODES } from './config/languages';
 
 function App() {

@@ -1,8 +1,8 @@
-import NavBar from "../../Components/NavBar";
+import NavBar from "../../components/NavBar";
 import { Link } from "react-router-dom";
 import './EnglishHomePage.css';
-import '../../Components/PoetCard.css';
-import PoetCard from "../../Components/PoetCard";
+import '../../components/PoetCard.css';
+import PoetCard from "../../components/PoetCard";
 import Shakespeare from '../../assets/Shakespeare.avif'; //change later from here
 import Byron from '../../assets/LordByron.jpg';
 import Poe from '../../assets/EdgarAllanPoe.jpeg';

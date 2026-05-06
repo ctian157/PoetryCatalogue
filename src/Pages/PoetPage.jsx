@@ -1,9 +1,9 @@
 import './PoetPage.css'
-import LanguagePoemCard from '../Components/LanguagePoemCard'
-import LanguagePoemDisplay from '../Components/LanguagePoemDisplay';
+import LanguagePoemCard from '../components/LanguagePoemCard'
+import LanguagePoemDisplay from '../components/LanguagePoemDisplay';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import NavBar from '../Components/NavBar';
+import NavBar from '../components/NavBar';
 import { getLanguageConfig } from '../config/languages';
 
 function PoetPage ({ fetchPoemsByLanguage }) {

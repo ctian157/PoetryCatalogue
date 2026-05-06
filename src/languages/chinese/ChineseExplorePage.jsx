@@ -1,9 +1,9 @@
 import "./ChineseExplorePage.css"
-import LanguagePoemCard from "../../Components/LanguagePoemCard"
-import LanguagePoemDisplay from "../../Components/LanguagePoemDisplay";
-import AddPoemCard from "../../Components/AddPoemCard";
+import LanguagePoemCard from "../../components/LanguagePoemCard"
+import LanguagePoemDisplay from "../../components/LanguagePoemDisplay";
+import AddPoemCard from "../../components/AddPoemCard";
 import { useParams } from 'react-router-dom';
-import NavBar from "../../Components/NavBar";
+import NavBar from "../../components/NavBar";
 
 //receives the poems list from App as a prop
 function ChineseExplorePage ({ 

@@ -1,6 +1,6 @@
 import { useParams} from 'react-router-dom';
 import { useState, useEffect } from "react";
-import useFavorites from "../Hooks/useFavorites"
+import useFavorites from "../hooks/useFavorites"
 import pinyin from 'pinyin';
 import { getLanguageConfig } from '../config/languages';
 

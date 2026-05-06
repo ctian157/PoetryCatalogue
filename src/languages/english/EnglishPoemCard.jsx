@@ -1,6 +1,6 @@
 import './EnglishPoemCard.css'
 import ScotCastle from '../../assets/ScotCastle.jpg'
-import useFavorites from '../../Hooks/useFavorites';
+import useFavorites from '../../hooks/useFavorites';
 
 //accepts a prop (which in this case is a json object)
 function EnglishPoemCard ({ poem, onClick }) {

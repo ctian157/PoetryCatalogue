@@ -1,9 +1,9 @@
 import './FavoritesPage.css'
-import NavBar from '../Components/NavBar'
+import NavBar from '../components/NavBar'
 import { useState } from 'react';
-import useFavorites from '../Hooks/useFavorites'
-import LanguagePoemCard from '../Components/LanguagePoemCard'
-import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
+import useFavorites from '../hooks/useFavorites'
+import LanguagePoemCard from '../components/LanguagePoemCard'
+import LanguagePoemDisplay from '../components/LanguagePoemDisplay'
 import pinyin from 'pinyin';
 
 function FavoritesPage () {

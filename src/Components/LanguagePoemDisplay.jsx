@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useFavorites from "../Hooks/useFavorites"; //like useState etc. but your own custom hook!
+import useFavorites from "../hooks/useFavorites"; //like useState etc. but your own custom hook!
 import { getLanguageConfig } from "../config/languages";
 
 

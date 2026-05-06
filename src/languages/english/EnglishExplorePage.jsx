@@ -1,8 +1,8 @@
 import "./EnglishExplorePage.css"
-import LanguagePoemCard from "../../Components/LanguagePoemCard"
-import LanguagePoemDisplay from "../../Components/LanguagePoemDisplay";
-import AddPoemCard from "../../Components/AddPoemCard";
-import NavBar from "../../Components/NavBar";
+import LanguagePoemCard from "../../components/LanguagePoemCard"
+import LanguagePoemDisplay from "../../components/LanguagePoemDisplay";
+import AddPoemCard from "../../components/AddPoemCard";
+import NavBar from "../../components/NavBar";
 
 //receives the poems list from App as a prop
 function EnglishExplorePage ({ 

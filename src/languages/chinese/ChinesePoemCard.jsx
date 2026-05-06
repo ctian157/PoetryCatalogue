@@ -1,6 +1,6 @@
 import './ChinesePoemCard.css'
 import InkBranch from '../../assets/InkBranch.png'
-import useFavorites from '../../Hooks/useFavorites';
+import useFavorites from '../../hooks/useFavorites';
 
 //accepts a prop (which in this case is a json object)
 function ChinesePoemCard ({ poem, onClick }) {

@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import "./MainPage.css"
-import LanguagePoemDisplay from '../Components/LanguagePoemDisplay'
+import LanguagePoemDisplay from '../components/LanguagePoemDisplay'
 import { LANGUAGE_CODES, LANGUAGES } from '../config/languages';
 
 function MainPage({poems}) {
