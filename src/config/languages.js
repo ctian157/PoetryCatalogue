@@ -1,7 +1,11 @@
-import ChineseHomePage from '../Pages/ChineseHomePage';
-import EnglishHomePage from '../Pages/EnglishHomePage';
-import ChineseExplorePage from '../Pages/ChineseExplorePage';
-import EnglishExplorePage from '../Pages/EnglishExplorePage';
+import ChineseHomePage from '../languages/chinese/ChineseHomePage';
+import EnglishHomePage from '../languages/english/EnglishHomePage';
+import ChineseExplorePage from '../languages/chinese/ChineseExplorePage';
+import EnglishExplorePage from '../languages/english/EnglishExplorePage';
+import ChinesePoemCard from '../languages/chinese/ChinesePoemCard';
+import EnglishPoemCard from '../languages/english/EnglishPoemCard';
+import ChinesePoemDisplay from '../languages/chinese/ChinesePoemDisplay';
+import EnglishPoemDisplay from '../languages/english/EnglishPoemDisplay';
 
 export const LANGUAGES = {
   zh: {
@@ -9,6 +13,8 @@ export const LANGUAGES = {
     name: 'Chinese',
     homeComponent: ChineseHomePage,
     exploreComponent: ChineseExplorePage,
+    poemCardComponent: ChinesePoemCard,
+    poemDisplayComponent: ChinesePoemDisplay,
     poetField: 'poet_en',
     navPath: '/zh',
   },
@@ -17,12 +23,16 @@ export const LANGUAGES = {
     name: 'English',
     homeComponent: EnglishHomePage,
     exploreComponent: EnglishExplorePage,
+    poemCardComponent: EnglishPoemCard,
+    poemDisplayComponent: EnglishPoemDisplay,
     poetField: 'poet',
     navPath: '/en',
   },
 };
 
-export const LANGUAGE_CODES = Object.keys(LANGUAGES); //Object refers to keys in LANGUAGES object, and keys() returns an array of those keys
+//Object is a built-in JavaScript object that provides methods for working with objects
+//Object.keys() returns an array of the keys in the object
+export const LANGUAGE_CODES = Object.keys(LANGUAGES); 
 
 export function getLanguageConfig(lang) {
   return LANGUAGES[lang] ?? null;

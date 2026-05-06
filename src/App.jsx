@@ -6,17 +6,21 @@ import { FavoritesProvider } from './Hooks/useFavorites';
 import FavoritesPage from './Pages/FavoritesPage';
 import LanguageExplore from './Pages/LanguageExplore';
 import PoetPage from './Pages/PoetPage'; 
+import { LANGUAGE_CODES } from './config/languages';
 
 function App() {
 
     //store fetched poems in initial arrays with no poems
     //update this with poems from backend once API data arrives
-    const [poemsByLanguage, setPoemsByLanguage] = useState({
-        all: [], //static
-        zh: [], //all dynamic keys below
-        en: [] 
-        //ADD MORE LANGUAGES AS NEEDED
-        });
+    //derive language keys from config so adding a new language does not require touching App state
+    const initialPoemsByLanguage = {
+        all: [],
+        ...Object.fromEntries(LANGUAGE_CODES.map((code) => [code, []])) 
+        //fromEntries creates an object from an array of key-value pairs
+        //spread operator takes an existing object and "unpacks" its contents into a new one
+    };
+
+    const [poemsByLanguage, setPoemsByLanguage] = useState(initialPoemsByLanguage);
 
     //GET: fetch all poems from backend once component loads
     //good to useEffect to do this so it only runs once when mounted

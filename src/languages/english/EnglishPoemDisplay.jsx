@@ -1,6 +1,6 @@
 import './EnglishPoemDisplay.css'
-import StarryNight from '../assets/StarryNight.jpg'
-import Frame from '../assets/ChineseFrame.png'
+import StarryNight from '../../assets/StarryNight.jpg'
+import Frame from '../../assets/ChineseFrame.png'
 
 //take poem and onClose from ExplorePage as props
 function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onToggleFavorite, isFavorite, onTranslate, loading }) {

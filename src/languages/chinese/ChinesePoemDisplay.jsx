@@ -1,6 +1,6 @@
 import './ChinesePoemDisplay.css'
-import MoonlightBoatRide from '../assets/MoonlightBoatRide.jpeg'
-import Frame from '../assets/ChineseFrame.png'
+import MoonlightBoatRide from '../../assets/MoonlightBoatRide.jpeg'
+import Frame from '../../assets/ChineseFrame.png'
 
 //take poem and onClose from ExplorePage as props
 function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onToggleFavorite, isFavorite, onTranslate, loading }) {

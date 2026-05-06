@@ -1,15 +1,15 @@
-import './EnglishPoemCard.css'
-import ScotCastle from '../assets/ScotCastle.jpg'
-import useFavorites from '../Hooks/useFavorites';
+import './ChinesePoemCard.css'
+import InkBranch from '../../assets/InkBranch.png'
+import useFavorites from '../../Hooks/useFavorites';
 
 //accepts a prop (which in this case is a json object)
-function EnglishPoemCard ({ poem, onClick }) {
+function ChinesePoemCard ({ poem, onClick }) {
 
     //object destructure; assign isFavorite to the method from useFavorites with the same name
     const { isFavorite } = useFavorites();
 
     return(
-        <div className = "poem-card" onClick = {onClick} style={{ backgroundImage: `url(${ScotCastle})`}}>
+        <div className = "poem-card" onClick = {onClick} style={{ backgroundImage: `url(${InkBranch})`}}>
 
             
             {isFavorite(poem.id) && ( 
@@ -18,10 +18,13 @@ function EnglishPoemCard ({ poem, onClick }) {
 
             <div className = "poemcard-info">
 
+                <p className = "poem-dynasty">{poem.dynasty}</p>
+
                 <h1>{poem.title}</h1>
 
                 <div className = "poet-info">
-                    <p className = "poet-name">{poem.poet}</p>
+                    <p className = "poet-name-cn">{poem.poet}</p>
+                    <p className =  "poet-name-en">{poem.poet_en}</p>
                 </div>
 
             </div>
@@ -29,4 +32,4 @@ function EnglishPoemCard ({ poem, onClick }) {
     )
 }
 
-export default EnglishPoemCard;
+export default ChinesePoemCard;

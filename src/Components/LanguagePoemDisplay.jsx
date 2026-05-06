@@ -1,16 +1,11 @@
-import ChinesePoemDisplay from "./ChinesePoemDisplay"; 
-import EnglishPoemDisplay from "./EnglishPoemDisplay"; 
 import { useState, useEffect } from "react";
 import useFavorites from "../Hooks/useFavorites"; //like useState etc. but your own custom hook!
+import { getLanguageConfig } from "../config/languages";
 
 
-function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onAllowUpdateAndDelete, onTranslate, loading }) { 
+function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onAllowUpdateAndDelete, onTranslate, loading }) {
 
-    const poemDisplays = { 
-        zh: ChinesePoemDisplay, 
-        en: EnglishPoemDisplay }; 
-
-    const PoemDisplay = poemDisplays[lang]; 
+    const PoemDisplay = getLanguageConfig(lang)?.poemDisplayComponent;
 
     const { isFavorite, removeFavorite, addFavorite } = useFavorites(); 
 

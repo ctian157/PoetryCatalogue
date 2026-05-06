@@ -1,12 +1,12 @@
-import NavBar from "../Components/NavBar";
+import NavBar from "../../Components/NavBar";
 import { Link } from "react-router-dom";
 import './EnglishHomePage.css';
-import '../Components/PoetCard.css';
-import PoetCard from "../Components/PoetCard";
-import Shakespeare from '../assets/Shakespeare.avif'; //change later from here
-import Byron from '../assets/LordByron.jpg';
-import Poe from '../assets/EdgarAllanPoe.jpeg';
-import Dickinson from '../assets/EmilyDickinson.jpg';
+import '../../Components/PoetCard.css';
+import PoetCard from "../../Components/PoetCard";
+import Shakespeare from '../../assets/Shakespeare.avif'; //change later from here
+import Byron from '../../assets/LordByron.jpg';
+import Poe from '../../assets/EdgarAllanPoe.jpeg';
+import Dickinson from '../../assets/EmilyDickinson.jpg';
 
 function EnglishHomePage({ poems }){
 
