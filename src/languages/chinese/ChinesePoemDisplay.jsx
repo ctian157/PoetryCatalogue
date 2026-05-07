@@ -3,7 +3,7 @@ import MoonlightBoatRide from '../../assets/MoonlightBoatRide.jpeg'
 import Frame from '../../assets/ChineseFrame.png'
 
 //take poem and onClose from ExplorePage as props
-function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onToggleFavorite, isFavorite, onTranslate, loading }) {
+function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onAllowTranslate, onToggleFavorite, isFavorite, onTranslate, loading }) {
 
     //modal-overlay refers to the for the temporary pop-up feature over the app
     return (
@@ -102,7 +102,7 @@ function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
                                 </div>)
                                 }
                             </div>
-                            {/*For now, disable translation button on pages that don't translate*/}
+
                             <div className = "translation">
                                 {poem.translation ? (
                                 <div className = "translation-text">
@@ -110,7 +110,7 @@ function ChinesePoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
                                     <p>{poem.translation}</p>
                                 </div>
                                 ) : (
-                                    onTranslate &&(
+                                    onAllowTranslate && (
                                         <button className = "translate-button" 
                                         onClick = {() => onTranslate(poem.id)} 
                                         disabled={loading}

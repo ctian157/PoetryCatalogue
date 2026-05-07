@@ -3,9 +3,11 @@ import useFavorites from "../hooks/useFavorites"; //like useState etc. but your 
 import { getLanguageConfig } from "../config/languages";
 
 
-function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onAllowUpdateAndDelete, onTranslate, loading }) {
+function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onTranslate, onAllowUpdateAndDelete, loading }) {
 
-    const PoemDisplay = getLanguageConfig(lang)?.poemDisplayComponent;
+    const languageConfig = getLanguageConfig(lang);
+    const PoemDisplay = languageConfig?.poemDisplayComponent;
+    const allowTranslate = languageConfig?.canTranslate;
 
     const { isFavorite, removeFavorite, addFavorite } = useFavorites(); 
 
@@ -66,6 +68,7 @@ function LanguagePoemDisplay( { poem, lang, onClose, onUpdate, onDelete, onAllow
                         onAllowUpdateAndDelete={onAllowUpdateAndDelete}
                         onToggleFavorite={handleToggleFavorite}
                         isFavorite={isFavorite(poem.id)}
+                        onAllowTranslate={allowTranslate}
                         onTranslate={onTranslate}
                         loading={loading}/>; } 
 

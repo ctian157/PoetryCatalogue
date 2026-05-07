@@ -10,6 +10,7 @@ function FavoritesPage () {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedPoem, setSelectedPoem] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const { favorites, addFavorite, removeFavorite } = useFavorites();
 
@@ -35,6 +36,10 @@ function FavoritesPage () {
         poem.content.toLowerCase().includes(userInput)
     );
 
+    const showError = (msg) => {
+        setErrorMessage(msg);
+        setTimeout(() => setErrorMessage(""), 5000);
+    }
 
     const handleTranslate = async(poemID) => {
         try {
@@ -97,7 +102,11 @@ function FavoritesPage () {
                 </div>
 
                 {selectedPoem && 
-                    <LanguagePoemDisplay poem = {selectedPoem} lang = {selectedPoem.language} onClose = {() =>setSelectedPoem(null)} onTranslate = {handleTranslate} loading = {loading}/>
+                    <LanguagePoemDisplay poem = {selectedPoem} 
+                                        lang = {selectedPoem.language} 
+                                        onClose = {() =>setSelectedPoem(null)} 
+                                        onTranslate = {handleTranslate}
+                                        loading = {loading}/>
                 }
                 </div>
         </div>

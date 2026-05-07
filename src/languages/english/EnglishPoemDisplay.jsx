@@ -3,7 +3,7 @@ import StarryNight from '../../assets/StarryNight.jpg'
 import Frame from '../../assets/ChineseFrame.png'
 
 //take poem and onClose from ExplorePage as props
-function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onToggleFavorite, isFavorite, onTranslate, loading }) {
+function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, onAllowUpdateAndDelete, onAllowTranslate, onToggleFavorite, isFavorite, onTranslate, loading }) {
 
     //modal-overlay refers to the for the temporary pop-up feature over the app
     return (
@@ -101,6 +101,24 @@ function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
 
                                 </div>)
                                 }
+                            </div>
+
+                            <div className = "translation">
+                                {poem.translation ? (
+                                <div className = "translation-text">
+                                    <h2>Translation</h2>
+                                    <p>{poem.translation}</p>
+                                </div>
+                                ) : (
+                                    onAllowTranslate && (
+                                        <button className = "translate-button" 
+                                        onClick = {() => onTranslate(poem.id)} 
+                                        disabled={loading}
+                                        >
+                                            {loading ? "Translating...": "Translate Poem"}
+                                        </button>
+                                    )
+                                )}
                             </div>
 
                             </div>

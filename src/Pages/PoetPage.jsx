@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import { getLanguageConfig } from '../config/languages';
+import { usePoemActions } from '../hooks/usePoemActions';
 
-function PoetPage ({ fetchPoemsByLanguage }) {
+function PoetPage ({ fetchPoemsByLanguage, setPoemsByLanguage }) {
 
     const [poems, setPoems] = useState([]);
 
@@ -15,6 +16,9 @@ function PoetPage ({ fetchPoemsByLanguage }) {
     const { lang, poetName } = useParams();
     const actualName = decodeURIComponent(poetName);
     const config = getLanguageConfig(lang);
+
+    const {handleTranslate, handleDelete, handleUpdate, 
+          selectedPoem, setSelectedPoem, loading} = usePoemActions({lang, setPoemsByLanguage});
 
     //do this here instead so that refreshing poetpage does not lose the poems to state reset
     useEffect(()=> {
@@ -59,11 +63,21 @@ function PoetPage ({ fetchPoemsByLanguage }) {
                 <p>No poems found for this poet.</p>
               ) : (
                 poems.map((p) => (
-                <LanguagePoemCard key = {p.id} poem={p} lang={lang} onClick = {() => {setSelectedPoem(p)}}/>
+                <LanguagePoemCard key = {p.id} 
+                                  poem={p} 
+                                  lang={lang} 
+                                  onClick = {() => {setSelectedPoem(p)}}/>
                 ))
               )}
 
-              <LanguagePoemDisplay poem = {selectedPoem} lang={lang} onClose = {() =>setSelectedPoem(null)}/>
+              <LanguagePoemDisplay poem = {selectedPoem} 
+                                  lang={lang} 
+                                  onClose = {() =>setSelectedPoem(null)}
+                                  onUpdate={handleUpdate}
+                                  onDelete={handleDelete}
+                                  onTranslate={handleTranslate}
+                                  onAllowUpdateAndDelete={true}
+                                  loading={loading}/>
             
           </div>
 

@@ -94,7 +94,8 @@ function App() {
 
                 <Route
                     path="poet/:poetName"
-                    element={<PoetPage fetchPoemsByLanguage={fetchPoemsByLanguage} />}/>
+                    element={<PoetPage fetchPoemsByLanguage={fetchPoemsByLanguage}
+                                        setPoemsByLanguage={setPoemsByLanguage} />}/>
             </Route>
 
             {/*favorites page is global*/}
@@ -104,7 +105,6 @@ function App() {
 
         </Routes>
         </BrowserRouter>
-
         </FavoritesProvider>
     )
 };
