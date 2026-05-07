@@ -1,6 +1,7 @@
 import { useParams} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import useFavorites from "../hooks/useFavorites"
+import { usePoemActions } from '../hooks/usePoemActions';
 import pinyin from 'pinyin';
 import { getLanguageConfig } from '../config/languages';
 
@@ -9,29 +10,24 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
 
     const { lang } = useParams(); 
     const config = getLanguageConfig(lang);
-
     
     useEffect(() => { 
         if (config && (!poemsByLanguage[lang]|| poemsByLanguage[lang].length === 0)) { 
             fetchPoemsByLanguage(lang); 
         } 
-    }, [lang, config, poemsByLanguage, fetchPoemsByLanguage]);
+    }, [lang, config, poemsByLanguage, fetchPoemsByLanguage]); //fetchPoemsByLanguage in dependency array to re-run when App re-executes (ie fetchAllPoemsByLanguage for some reason)
 
     //methods from useFavorites.js
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+    const {handleTranslate, handleDelete, handleUpdate, 
+            selectedPoem, setSelectedPoem, loading, showError, errorMessage} = usePoemActions({lang, setPoemsByLanguage});
 
     //for search feature
     //will return ALL poems upon mount because every string includes initial state ""
     const [searchTerm, setSearchTerm] = useState ("");
 
-    //for poem display feature
-    const [selectedPoem, setSelectedPoem] = useState(null);
-
     //for adding to database feature
     const [isCreating, setIsCreating] = useState(false);
-
-    //for loading text when calling Gemini
-    const [loading, setLoading] = useState(false);
 
      //to temporarily store state of fields to be added
      const [newPoem, setNewPoem] = useState({
@@ -43,9 +39,6 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
     });
 
     const poems = poemsByLanguage[lang] || [];
-    
-    //for error messages
-    const [errorMessage, setErrorMessage] = useState("");
     
 
     //for romanized search (定風波 -> "ding feng bo")
@@ -61,8 +54,7 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
     //filter for both actual Chinese text and English text
     const filteredPoems = poemsWithPinyin.filter(poem => 
         poem.title.includes(userInput) ||
-        poem.pinyinTitle.toLowerCase().replace(/\s+/g, '').includes(userInput)||
-        poem.content.toLowerCase().includes(userInput)
+        poem.pinyinTitle.toLowerCase().replace(/\s+/g, '').includes(userInput)
     );
     
     //maintains favorites
@@ -74,72 +66,7 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
     }
     };
 
-    //handles errors
-    const showError = (msg) => {
-        setErrorMessage(msg);
-        setTimeout(() => setErrorMessage(""), 5000);
-    }
     
-
-    //deletes poem from database
-    const handleDelete = async (poemID) => {
-        try {
-            //delete poem from database
-            await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem/${poemID}`, {
-                method:'DELETE'
-            });
-
-            //notify user
-            alert(`Poem deleted`);
-
-            //re-render UI upon state change
-            setPoemsByLanguage((prev) => ({...prev, [lang]: prev[lang].filter(p => p.id !== poemID)}));
-
-            //remove from Favorites as well if it's in there
-            if (isFavorite(poemID)) {
-                removeFavorite(poemID);
-            }
-
-            setSelectedPoem(null);
-
-        } catch (error) {
-            showError("Non-server error occurred.");
-            console.log("Delete failed:", error)
-        }
-    };
-
-
-    //updates database
-    const handleUpdate = async (editedPoem)=> {
-        try {
-            //update poem in database
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem/${editedPoem.id}`, {
-                method:'PUT',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify(editedPoem)
-            })
-            
-            if (!response.ok) {
-                const errorText = await response.text();  // like "Duplicate" or "Bad Request" from Springboot for null
-                showError(`Update failed: ${errorText}`)
-                return;
-            }
-
-            const updatedPoem = await response.json(); //convert returned response body JSON into Javascript object
-
-            //update local array of poems, replacing old poem with new and keeping index in array
-            setPoemsByLanguage(prev => ({...prev, 
-                                        [lang]: prev[lang].map(p => 
-                                            (p.id === updatedPoem.id ? updatedPoem : p))}))
-                
-            //Displays updated poem automatically for user
-            setSelectedPoem(updatedPoem);
-
-        } catch (error) {
-            showError("Non-server error occurred.");
-        }
-    }
-
     //adds to database
     const handlePost = async(newPoem) => {
 
@@ -181,39 +108,6 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
         }
     }
 
-    const handleTranslate = async(poemID) => {
-        try {
-            setLoading(true); //start loading
-
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem/translate/${poemID}`, {
-                method:'PUT'
-            })
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                showError(`Translating poem failed: ${errorText}`);
-                return;
-            }
-
-            const translatedPoem = await response.json();
-
-            //update local array of poems, replacing old poem with new and keeping index in array
-            setPoemsByLanguage(prev => ({...prev,
-                                            [lang]: prev[lang].map(p => 
-                                                (p.id === translatedPoem.id ? translatedPoem : p))}))
-                
-
-            //display with translation
-            setSelectedPoem(translatedPoem);
-
-
-        } catch (error) {
-            showError("Non-server error occurred.");
-        } finally {
-            setLoading(false); //stop loading
-        }
-
-    }
 
     const ExplorePage = config?.exploreComponent;
 

@@ -9,7 +9,6 @@ import { getLanguageConfig } from '../config/languages';
 function PoetPage ({ fetchPoemsByLanguage }) {
 
     const [poems, setPoems] = useState([]);
-    const [selectedPoem, setSelectedPoem] = useState(null);
 
     // /poet/:poetName was dynamic URL routing, poetName was marked as a parameter
     //change to Javascript object
@@ -53,8 +52,6 @@ function PoetPage ({ fetchPoemsByLanguage }) {
             <NavBar/>
 
           </div>
-
-          <p> Poems may be edited or deleted only on the Explore page ~ </p>
 
           <div className = "poet-library">
 

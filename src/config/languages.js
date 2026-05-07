@@ -17,6 +17,8 @@ export const LANGUAGES = {
     poemDisplayComponent: ChinesePoemDisplay,
     poetField: 'poet_en',
     navPath: '/zh',
+    canTranslate: true,
+    romanizedSearch: true
   },
   en: {
     code: 'en',
@@ -27,8 +29,11 @@ export const LANGUAGES = {
     poemDisplayComponent: EnglishPoemDisplay,
     poetField: 'poet',
     navPath: '/en',
-  },
+    canTranslate: false,
+    romanizedSearch: false
+  }
 };
+
 
 //Object is a built-in JavaScript object that provides methods for working with objects
 //Object.keys() returns an array of the keys in the object
