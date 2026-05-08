@@ -1,8 +1,7 @@
 import { useParams} from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useFavorites from "../hooks/useFavorites"
 import { usePoemActions } from '../hooks/usePoemActions';
-import pinyin from 'pinyin';
 import { getLanguageConfig } from '../config/languages';
 
 //receives the poems list from App as a prop
@@ -39,22 +38,11 @@ function LanguageExplore ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLan
     });
 
     const poems = poemsByLanguage[lang] || [];
-    
+    const matchesSearch = config?.matchesSearch ?? (() => true); //if lhs is null/undefined, use true as fallback so all poems are rendered
 
-    //for romanized search (定風波 -> "ding feng bo")
-    const poemsWithPinyin = poems.map(poem => ({
-        ...poem,
-        pinyinTitle: pinyin(poem.title, {//new field
-            style: pinyin.STYLE_NORMAL //returns nested array as each character maps to an array of pinyin syllables
-            }).flat().join(" ") //flatten array into single array and join elements into single string
-    }));
-
-    const userInput = searchTerm.toLowerCase().trim().replace(/\s+/g, '');
-
-    //filter for both actual Chinese text and English text
-    const filteredPoems = poemsWithPinyin.filter(poem => 
-        poem.title.includes(userInput) ||
-        poem.pinyinTitle.toLowerCase().replace(/\s+/g, '').includes(userInput)
+    const filteredPoems = useMemo(
+        () => poems.filter((poem) => matchesSearch(poem, searchTerm)),
+        [poems, matchesSearch, searchTerm]
     );
     
     //maintains favorites

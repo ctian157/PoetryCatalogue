@@ -6,6 +6,11 @@ import ChinesePoemCard from '../languages/chinese/ChinesePoemCard';
 import EnglishPoemCard from '../languages/english/EnglishPoemCard';
 import ChinesePoemDisplay from '../languages/chinese/ChinesePoemDisplay';
 import EnglishPoemDisplay from '../languages/english/EnglishPoemDisplay';
+import pinyin from 'pinyin';
+
+function normalizeSearchInput(value = '') {
+  return value.toLowerCase().trim().replace(/\s+/g, '');
+}
 
 export const LANGUAGES = {
   zh: {
@@ -18,7 +23,21 @@ export const LANGUAGES = {
     poetField: 'poet_en',
     navPath: '/zh',
     canTranslate: true,
-    romanizedSearch: true
+    romanizedSearch: true,
+    matchesSearch: (poem, rawInput) => {
+      const userInput = normalizeSearchInput(rawInput);
+
+      if (!userInput) return true;
+
+      const pinyinTitle = pinyin(poem.title || '', {
+        style: pinyin.STYLE_NORMAL
+      }).flat().join('').toLowerCase();
+
+      return (
+        (poem.title || '').toLowerCase().includes(userInput) ||
+        pinyinTitle.includes(userInput)
+      );
+    }
   },
   en: {
     code: 'en',
@@ -30,7 +49,14 @@ export const LANGUAGES = {
     poetField: 'poet',
     navPath: '/en',
     canTranslate: false,
-    romanizedSearch: false
+    romanizedSearch: false,
+    matchesSearch: (poem, rawInput) => {
+      const userInput = normalizeSearchInput(rawInput);
+
+      if (!userInput) return true;
+
+      return (poem.title || '').toLowerCase().includes(userInput);
+    }
   }
 };
 
