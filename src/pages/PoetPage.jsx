@@ -76,7 +76,7 @@ function PoetPage ({ fetchPoemsByLanguage, setPoemsByLanguage }) {
                                   onUpdate={handleUpdate}
                                   onDelete={handleDelete}
                                   onTranslate={handleTranslate}
-                                  onAllowUpdateAndDelete={true}
+                                  canUpdateDelete={true}
                                   loading={loading}/>
             
           </div>

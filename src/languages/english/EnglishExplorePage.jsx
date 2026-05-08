@@ -58,7 +58,7 @@ function EnglishExplorePage ({
                                 onClose = {() =>setSelectedPoem(null)}
                                 onUpdate = {onUpdate}
                                 onDelete = {onDelete}
-                                onAllowUpdateAndDelete={true}
+                                canUpdateDelete={true}
                                 onTranslate = {onTranslate}
                                 loading = {loading}/>
                 )}

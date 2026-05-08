@@ -86,7 +86,7 @@ function MainPage({poems}) {
                     poem={selectedPoem} 
                     lang={selectedPoem.language}
                     onClose={() => setSelectedPoem(null)}
-                    onAllowUpdateAndDelete={false}
+                    canUpdateDelete={false}
                 />
             )}
 
