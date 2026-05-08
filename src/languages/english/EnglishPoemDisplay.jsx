@@ -1,6 +1,7 @@
 import './EnglishPoemDisplay.css'
 import StarryNight from '../../assets/StarryNight.jpg'
 import Frame from '../../assets/ChineseFrame.png'
+import BottomButtons from '../../components/BottomButtons'
 
 //take poem and onClose from ExplorePage as props
 function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, setIsEditing, setEditedPoem, onEditField, onSave, canUpdateDelete, canTranslate, onToggleFavorite, isFavorite, onTranslate, loading }) {
@@ -81,49 +82,14 @@ function EnglishPoemDisplay ({ poem, onClose, onDelete, editedPoem, isEditing, s
 
 
                     <div className = "bottom-buttons">
-
-                        <div className = "features">
-                            <div className = "edit-and-delete">
-                                {canUpdateDelete && (
-                                <div className = "controls">
-                                <button className = "editing-button"
-                                    onClick = {() => {
-                                        setIsEditing(true)
-                                        //set fields with prop poem values upon render
-                                        setEditedPoem(poem)
-                                    }}>
-                                    Edit Poem
-                                </button>
-                    
-                                <button className = "editing-button" onClick = {() => onDelete(poem.id)}>
-                                    Delete Poem
-                                </button>
-
-                                </div>)
-                                }
-                            </div>
-
-                            <div className = "translation">
-                                {poem.translation ? (
-                                <div className = "translation-text">
-                                    <h2>Translation</h2>
-                                    <p>{poem.translation}</p>
-                                </div>
-                                ) : (
-                                    canTranslate && (
-                                        <button className = "translate-button" 
-                                        onClick = {() => onTranslate(poem.id)} 
-                                        disabled={loading}
-                                        >
-                                            {loading ? "Translating...": "Translate Poem"}
-                                        </button>
-                                    )
-                                )}
-                            </div>
-
-                            </div>
-
-                        </div>
+                        <BottomButtons  poem = {poem}
+                                        canUpdateDelete = {canUpdateDelete}
+                                        canTranslate = {canTranslate}
+                                        loading = {loading}
+                                        onEdit = {() => { setIsEditing(true); setEditedPoem(poem); }}
+                                        onDelete = {onDelete}
+                                        onTranslate = {onTranslate}></BottomButtons>
+                    </div>
                     </div>
                      
                     )}

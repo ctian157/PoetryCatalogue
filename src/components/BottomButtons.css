@@ -1,0 +1,32 @@
+
+.editing-button{
+    padding:auto 5px;
+    font-size:0.7rem;
+    font-family:'Inknut Antiqua';
+    cursor:pointer;
+}
+
+.translation p{
+    font-family:'Inknut Antiqua';
+    font-size:1rem;
+    white-space: pre-line;
+}
+
+.translate-button{
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family:'Inknut Antiqua';
+    transition: transform 0.2s ease-in-out;
+    background: linear-gradient(135deg, #fff176, #fbc02d);
+}
+
+.translate-button:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+.controls{
+    display:flex;
+    gap:20px;
+}
+
