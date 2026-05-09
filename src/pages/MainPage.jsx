@@ -25,13 +25,19 @@ function MainPage({poems}) {
             <div className="main-title-bar">
                 <h1>Poems Around the World</h1>
 
-                <div className = "language-links">
+                <div className="language-links">
                 {LANGUAGE_CODES.map((code) => (
                     <Link key={code} to={LANGUAGES[code].navPath}>
                         {LANGUAGES[code].name}
                     </Link>
                 ))}
                 </div>
+
+                <div className="favorites-link">
+                    <Link to="/favorites"> Your Favorites</Link>
+                </div>
+
+
             </div>
 
             <div className = "main-body">

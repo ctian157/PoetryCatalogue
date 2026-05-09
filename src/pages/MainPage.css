@@ -52,6 +52,29 @@
   font-size:1.2rem;
 }
 
+.favorites-link {
+  position: absolute;
+  bottom: 2rem;
+  right: 1.4rem;
+}
+
+.favorites-link a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Inknut Antiqua';
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.favorites-link a:hover {
+  color: #000;
+  transform: scale(1.1);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+}
+
+
 .main-body{
   display: flex;
   justify-content: center; /* horizontal */
