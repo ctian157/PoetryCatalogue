@@ -2,44 +2,31 @@ import './PoetPage.css'
 import LanguagePoemCard from '../components/LanguagePoemCard'
 import LanguagePoemDisplay from '../components/LanguagePoemDisplay';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import { getLanguageConfig } from '../config/languages';
 import { usePoemActions } from '../hooks/usePoemActions';
 
-function PoetPage ({ fetchPoemsByLanguage, setPoemsByLanguage }) {
+function PoetPage ({ poemsByLanguage, fetchPoemsByLanguage, setPoemsByLanguage }) {
 
-    const [poems, setPoems] = useState([]);
-
-    // /poet/:poetName was dynamic URL routing, poetName was marked as a parameter
+   // /poet/:poetName was dynamic URL routing, poetName was marked as a parameter
     //change to Javascript object
     const { lang, poetName } = useParams();
     const actualName = decodeURIComponent(poetName);
     const config = getLanguageConfig(lang);
 
-    const {handleTranslate, handleDelete, handleUpdate, 
+    const {handleTranslate, handleDelete, handleUpdate,
           selectedPoem, setSelectedPoem, loading} = usePoemActions({lang, setPoemsByLanguage});
 
-    //do this here instead so that refreshing poetpage does not lose the poems to state reset
-    useEffect(()=> {
-      if (!config) {
-        setPoems([]);
-        return;
-      }
+    //useEffect to run upon mount to avoid any state reset problems upon hard refresh; fetch triggered
+    useEffect(() => {
+      if (config && (!poemsByLanguage[lang] || poemsByLanguage[lang].length === 0)) {
+        fetchPoemsByLanguage(lang);
+      }}, [lang, config, poemsByLanguage, fetchPoemsByLanguage]); 
+    //^any update/delete will change poemsByLanguage, which will in turn change poetPage (no staleness)
 
-      async function loadPoems() {
-        const fetchedPoems = await fetchPoemsByLanguage(lang);
-        const poetField = config.poetField;
-        const filteredPoems = fetchedPoems.filter (
-          p => p[poetField] === actualName
-        );
-
-        setPoems(filteredPoems);
-      }
-
-      loadPoems();
-
-    }, [lang, actualName, config, fetchPoemsByLanguage]);
+    const poems = config ? (poemsByLanguage[lang] || []).filter(p => p[config.poetField] === actualName)
+                          : [];
 
     if (!config) {
       return <div>Language not supported.</div>;
@@ -64,8 +51,8 @@ function PoetPage ({ fetchPoemsByLanguage, setPoemsByLanguage }) {
               ) : (
                 poems.map((p) => (
                 <LanguagePoemCard key = {p.id} 
-                                  poem={p} 
-                                  lang={lang} 
+                                  poem = {p} 
+                                  lang = {lang} 
                                   onClick = {() => {setSelectedPoem(p)}}/>
                 ))
               )}

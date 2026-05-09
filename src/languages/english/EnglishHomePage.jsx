@@ -38,7 +38,7 @@ function EnglishHomePage({ poems }){
     
             <div className = "collection">
     
-                <h1> Famous Poets:</h1>
+                <h1> Our Collection :</h1>
     
                 <div className = "poet-wheel">
     

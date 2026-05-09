@@ -94,7 +94,8 @@ function App() {
 
                 <Route
                     path="poet/:poetName"
-                    element={<PoetPage fetchPoemsByLanguage={fetchPoemsByLanguage}
+                    element={<PoetPage poemsByLanguage={poemsByLanguage}
+                                        fetchPoemsByLanguage={fetchPoemsByLanguage}
                                         setPoemsByLanguage={setPoemsByLanguage} />}/>
             </Route>
 
