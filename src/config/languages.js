@@ -13,6 +13,17 @@ function normalizeSearchInput(value = '') {
 }
 
 export const LANGUAGES = {
+  all: {
+    code: 'all',
+    name: 'All',
+    matchesSearch: (poem, rawInput) => {
+      const langConfig = LANGUAGES[poem.language];
+      return langConfig?.matchesSearch
+        ? langConfig.matchesSearch(poem, rawInput)
+        : (poem.title || '').toLowerCase().includes(normalizeSearchInput(rawInput));
+    }
+  },
+
   zh: {
     code: 'zh',
     name: 'Chinese',
@@ -63,7 +74,7 @@ export const LANGUAGES = {
 
 //Object is a built-in JavaScript object that provides methods for working with objects
 //Object.keys() returns an array of the keys in the object
-export const LANGUAGE_CODES = Object.keys(LANGUAGES); 
+export const LANGUAGE_CODES = Object.keys(LANGUAGES).filter(code => code !== 'all');
 
 export function getLanguageConfig(lang) {
   return LANGUAGES[lang] ?? null;

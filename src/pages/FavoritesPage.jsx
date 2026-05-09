@@ -1,12 +1,14 @@
 import './FavoritesPage.css'
 import NavBar from '../components/NavBar'
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import useFavorites from '../hooks/useFavorites'
 import LanguagePoemCard from '../components/LanguagePoemCard'
 import LanguagePoemDisplay from '../components/LanguagePoemDisplay'
-import pinyin from 'pinyin';
+import { getLanguageConfig } from '../config/languages';
 
 function FavoritesPage () {
+
+    const config = getLanguageConfig('all');
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedPoem, setSelectedPoem] = useState(null);
@@ -17,23 +19,11 @@ function FavoritesPage () {
     //for loading text when calling Gemini
     const [loading, setLoading] = useState(false);
 
-    //for romanized search (定風波 -> "ding feng bo")
-    const favoritesWithPinyinMaybe = favorites.map(poem => ({
-        ...poem,
-        pinyinTitle: 
-            poem.language === "zh" ? pinyin(poem.title, {//new field
-            style: pinyin.STYLE_NORMAL //returns nested array as each character maps to an array of pinyin syllables
-            }).flat().join(" ") //flatten array into single array and join elements into single string
-            : null //not Chinese
-    }));
+    const matchesSearch = config?.matchesSearch ?? (() => true);
 
-    const userInput = searchTerm.toLowerCase().trim().replace(/\s+/g, '');
-
-    //filter for both actual Chinese text and English text
-    const filteredPoems = favoritesWithPinyinMaybe.filter(poem => 
-        poem.title.toLowerCase().includes(userInput) ||
-        (poem.language == 'zh' && poem.pinyinTitle.toLowerCase().replace(/\s+/g, '').includes(userInput))||
-        poem.content.toLowerCase().includes(userInput)
+    const filteredPoems = useMemo(
+        () => favorites.filter((poem) => matchesSearch(poem, searchTerm)),
+        [favorites, matchesSearch, searchTerm]
     );
 
     const showError = (msg) => {
