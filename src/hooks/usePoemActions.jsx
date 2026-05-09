@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import useFavorites from './useFavorites';
 
-export function usePoemActions({lang, setPoemsByLanguage}) {
+//onPoemTranslated is a callback function to work with the localStorage on Favorites page
+export function usePoemActions({ lang, setPoemsByLanguage, onPoemTranslated } = {}) {
 
     const { removeFavorite, isFavorite } = useFavorites();
     const [selectedPoem, setSelectedPoem] = useState(null);
@@ -15,6 +16,8 @@ export function usePoemActions({lang, setPoemsByLanguage}) {
 
     //deletes poem from database
     const handleDelete = async (poemID) => {
+        if (setPoemsByLanguage == null || lang == null) return;
+        //else
         try {
             //delete poem from database
             await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem/${poemID}`, {
@@ -43,6 +46,7 @@ export function usePoemActions({lang, setPoemsByLanguage}) {
 
     //updates database
     const handleUpdate = async (editedPoem)=> {
+        if (setPoemsByLanguage == null || lang == null) return;
         try {
 
             //update poem in database
@@ -89,11 +93,16 @@ export function usePoemActions({lang, setPoemsByLanguage}) {
 
             const translatedPoem = await response.json();
 
-            //update local array of poems, replacing old poem with new and keeping index in array
-            setPoemsByLanguage(prev => ({...prev,
-                                            [lang]: prev[lang].map(p => 
-                                                (p.id === translatedPoem.id ? translatedPoem : p))}))
-                
+            if (setPoemsByLanguage != null && lang != null) {
+                setPoemsByLanguage((prev) => ({
+                    ...prev,
+                    [lang]: (prev[lang] || []).map((p) =>
+                        (p.id === translatedPoem.id ? translatedPoem : p)),
+                }));
+            }
+
+            //pass in translatedPoem as the parameter for callback function (onPoemTranslated) if function defined
+            onPoemTranslated?.(translatedPoem); 
 
             //display with translation
             setSelectedPoem(translatedPoem);

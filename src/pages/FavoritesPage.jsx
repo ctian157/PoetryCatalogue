@@ -2,6 +2,7 @@ import './FavoritesPage.css'
 import NavBar from '../components/NavBar'
 import { useState, useMemo } from 'react';
 import useFavorites from '../hooks/useFavorites'
+import { usePoemActions } from '../hooks/usePoemActions'
 import LanguagePoemCard from '../components/LanguagePoemCard'
 import LanguagePoemDisplay from '../components/LanguagePoemDisplay'
 import { getLanguageConfig } from '../config/languages';
@@ -11,13 +12,16 @@ function FavoritesPage () {
     const config = getLanguageConfig('all');
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedPoem, setSelectedPoem] = useState(null);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const { favorites, addFavorite, removeFavorite } = useFavorites();
 
-    //for loading text when calling Gemini
-    const [loading, setLoading] = useState(false);
+    
+    const { handleTranslate, selectedPoem, setSelectedPoem, loading, errorMessage,} = usePoemActions({
+        onPoemTranslated: (translatedPoem) => {//drop old copy from favorites list and add new one (with same id)
+            removeFavorite(translatedPoem.id);
+            addFavorite(translatedPoem);
+        },
+    });
 
     const matchesSearch = config?.matchesSearch ?? (() => true);
 
@@ -25,44 +29,6 @@ function FavoritesPage () {
         () => favorites.filter((poem) => matchesSearch(poem, searchTerm)),
         [favorites, matchesSearch, searchTerm]
     );
-
-    const showError = (msg) => {
-        setErrorMessage(msg);
-        setTimeout(() => setErrorMessage(""), 5000);
-    }
-
-    const handleTranslate = async(poemID) => {
-        try {
-            setLoading(true); //start loading
-
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/poem/translate/${poemID}`, {
-                method:'PUT'
-            })
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                showError(`Translating poem failed: ${errorText}`);
-                return;
-            }
-
-            const translatedPoem = await response.json();
-
-            //update favorites list: remove old and add new poem with translation
-            removeFavorite(poemID);
-            addFavorite(translatedPoem);
-
-            //display with translation
-            setSelectedPoem(translatedPoem);
-
-        } catch (error) {
-            showError("Non-server error occurred.");
-        } finally {
-            setLoading(false); //stop loading
-        }
-
-    }
-
-    
 
     return (
         <div className = "favorites-page">
@@ -91,10 +57,28 @@ function FavoritesPage () {
                     }        
                 </div>
 
+                {errorMessage && (
+                    <div style={{
+                        position: 'fixed',
+                        top: '20px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        backgroundColor: '#e74c3c',
+                        color: 'white',
+                        padding: '10px 20px',
+                        borderRadius: '8px',
+                        zIndex: 1000,
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+                    }}>
+                        {errorMessage}
+                    </div>
+                )}
+
                 {selectedPoem && 
                     <LanguagePoemDisplay poem = {selectedPoem} 
                                         lang = {selectedPoem.language} 
                                         onClose = {() =>setSelectedPoem(null)} 
+                                        canUpdateDelete={false} //Favorites page does not have UpdateDelete permissions, so dont render those buttons
                                         onTranslate = {handleTranslate}
                                         loading = {loading}/>
                 }
